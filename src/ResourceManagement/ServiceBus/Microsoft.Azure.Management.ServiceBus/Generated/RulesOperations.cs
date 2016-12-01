@@ -25,17 +25,17 @@ namespace Microsoft.Azure.Management.ServiceBus
     using Models;
 
     /// <summary>
-    /// SubscriptionsOperations operations.
+    /// RulesOperations operations.
     /// </summary>
-    internal partial class SubscriptionsOperations : IServiceOperations<ServiceBusManagementClient>, ISubscriptionsOperations
+    internal partial class RulesOperations : IServiceOperations<ServiceBusManagementClient>, IRulesOperations
     {
         /// <summary>
-        /// Initializes a new instance of the SubscriptionsOperations class.
+        /// Initializes a new instance of the RulesOperations class.
         /// </summary>
         /// <param name='client'>
         /// Reference to the service client.
         /// </param>
-        internal SubscriptionsOperations(ServiceBusManagementClient client)
+        internal RulesOperations(ServiceBusManagementClient client)
         {
             if (client == null) 
             {
@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         public ServiceBusManagementClient Client { get; private set; }
 
         /// <summary>
-        /// List all the subscriptions under a specified topic
+        /// List all the rules
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -61,6 +61,9 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <param name='topicName'>
         /// The topic name.
         /// </param>
+        /// <param name='subscriptionName'>
+        /// Subscription name to fetch Rules created
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -70,7 +73,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<SubscriptionResource>>> ListAllWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<RuleResource>>> ListAllWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -83,6 +86,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             if (topicName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "topicName");
+            }
+            if (subscriptionName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionName");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -102,15 +109,17 @@ namespace Microsoft.Azure.Management.ServiceBus
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("namespaceName", namespaceName);
                 tracingParameters.Add("topicName", topicName);
+                tracingParameters.Add("subscriptionName", subscriptionName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "ListAll", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{namespaceName}", Uri.EscapeDataString(namespaceName));
             _url = _url.Replace("{topicName}", Uri.EscapeDataString(topicName));
+            _url = _url.Replace("{subscriptionName}", Uri.EscapeDataString(subscriptionName));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -208,7 +217,7 @@ namespace Microsoft.Azure.Management.ServiceBus
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<SubscriptionResource>>();
+            var _result = new AzureOperationResponse<IPage<RuleResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -221,7 +230,7 @@ namespace Microsoft.Azure.Management.ServiceBus
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Page<SubscriptionResource>>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<Page<RuleResource>>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -241,7 +250,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         }
 
         /// <summary>
-        /// Creates a topic subscription
+        /// Creates a new rule
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -255,8 +264,11 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <param name='subscriptionName'>
         /// The subscriptionName name.
         /// </param>
+        /// <param name='ruleName'>
+        /// The rule name.
+        /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to create a subscription Resource.
+        /// Parameters supplied to create a rule.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -267,7 +279,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SubscriptionResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, SubscriptionCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RuleResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, string ruleName, RuleCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -284,6 +296,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             if (subscriptionName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionName");
+            }
+            if (ruleName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ruleName");
             }
             if (parameters == null)
             {
@@ -312,17 +328,19 @@ namespace Microsoft.Azure.Management.ServiceBus
                 tracingParameters.Add("namespaceName", namespaceName);
                 tracingParameters.Add("topicName", topicName);
                 tracingParameters.Add("subscriptionName", subscriptionName);
+                tracingParameters.Add("ruleName", ruleName);
                 tracingParameters.Add("parameters", parameters);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "CreateOrUpdate", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules/{ruleName}").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{namespaceName}", Uri.EscapeDataString(namespaceName));
             _url = _url.Replace("{topicName}", Uri.EscapeDataString(topicName));
             _url = _url.Replace("{subscriptionName}", Uri.EscapeDataString(subscriptionName));
+            _url = _url.Replace("{ruleName}", Uri.EscapeDataString(ruleName));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -426,7 +444,7 @@ namespace Microsoft.Azure.Management.ServiceBus
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SubscriptionResource>();
+            var _result = new AzureOperationResponse<RuleResource>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -439,7 +457,7 @@ namespace Microsoft.Azure.Management.ServiceBus
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<SubscriptionResource>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<RuleResource>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -459,7 +477,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         }
 
         /// <summary>
-        /// Deletes a subscription from the specified topic.
+        /// Deletes an existing rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -473,6 +491,9 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <param name='subscriptionName'>
         /// The subscription name.
         /// </param>
+        /// <param name='ruleName'>
+        /// The rule name.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -482,7 +503,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, string ruleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -499,6 +520,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             if (subscriptionName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionName");
+            }
+            if (ruleName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ruleName");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -519,16 +544,18 @@ namespace Microsoft.Azure.Management.ServiceBus
                 tracingParameters.Add("namespaceName", namespaceName);
                 tracingParameters.Add("topicName", topicName);
                 tracingParameters.Add("subscriptionName", subscriptionName);
+                tracingParameters.Add("ruleName", ruleName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Delete", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules/{ruleName}").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{namespaceName}", Uri.EscapeDataString(namespaceName));
             _url = _url.Replace("{topicName}", Uri.EscapeDataString(topicName));
             _url = _url.Replace("{subscriptionName}", Uri.EscapeDataString(subscriptionName));
+            _url = _url.Replace("{ruleName}", Uri.EscapeDataString(ruleName));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -628,7 +655,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         }
 
         /// <summary>
-        /// Returns a subscription description for the specified topic.
+        /// Retrieves the description for the specified rule.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -642,6 +669,9 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <param name='subscriptionName'>
         /// The subscription name.
         /// </param>
+        /// <param name='ruleName'>
+        /// The rule name.
+        /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
         /// </param>
@@ -651,7 +681,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SubscriptionResource>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<RuleResource>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, string ruleName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -668,6 +698,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             if (subscriptionName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "subscriptionName");
+            }
+            if (ruleName == null)
+            {
+                throw new ValidationException(ValidationRules.CannotBeNull, "ruleName");
             }
             if (this.Client.ApiVersion == null)
             {
@@ -688,16 +722,18 @@ namespace Microsoft.Azure.Management.ServiceBus
                 tracingParameters.Add("namespaceName", namespaceName);
                 tracingParameters.Add("topicName", topicName);
                 tracingParameters.Add("subscriptionName", subscriptionName);
+                tracingParameters.Add("ruleName", ruleName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
                 ServiceClientTracing.Enter(_invocationId, this, "Get", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
-            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}").ToString();
+            var _url = new Uri(new Uri(_baseUrl + (_baseUrl.EndsWith("/") ? "" : "/")), "subscriptions/{subscriptionId}/resourceGroups/{resourceGroupName}/providers/Microsoft.ServiceBus/namespaces/{namespaceName}/topics/{topicName}/subscriptions/{subscriptionName}/rules/{ruleName}").ToString();
             _url = _url.Replace("{resourceGroupName}", Uri.EscapeDataString(resourceGroupName));
             _url = _url.Replace("{namespaceName}", Uri.EscapeDataString(namespaceName));
             _url = _url.Replace("{topicName}", Uri.EscapeDataString(topicName));
             _url = _url.Replace("{subscriptionName}", Uri.EscapeDataString(subscriptionName));
+            _url = _url.Replace("{ruleName}", Uri.EscapeDataString(ruleName));
             _url = _url.Replace("{subscriptionId}", Uri.EscapeDataString(this.Client.SubscriptionId));
             List<string> _queryParameters = new List<string>();
             if (this.Client.ApiVersion != null)
@@ -795,7 +831,7 @@ namespace Microsoft.Azure.Management.ServiceBus
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<SubscriptionResource>();
+            var _result = new AzureOperationResponse<RuleResource>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -808,7 +844,7 @@ namespace Microsoft.Azure.Management.ServiceBus
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<SubscriptionResource>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<RuleResource>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {
@@ -828,7 +864,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         }
 
         /// <summary>
-        /// List all the subscriptions under a specified topic
+        /// List all the rules
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -842,7 +878,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<SubscriptionResource>>> ListAllNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<RuleResource>>> ListAllNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -954,7 +990,7 @@ namespace Microsoft.Azure.Management.ServiceBus
                 throw ex;
             }
             // Create Result
-            var _result = new AzureOperationResponse<IPage<SubscriptionResource>>();
+            var _result = new AzureOperationResponse<IPage<RuleResource>>();
             _result.Request = _httpRequest;
             _result.Response = _httpResponse;
             if (_httpResponse.Headers.Contains("x-ms-request-id"))
@@ -967,7 +1003,7 @@ namespace Microsoft.Azure.Management.ServiceBus
                 _responseContent = await _httpResponse.Content.ReadAsStringAsync().ConfigureAwait(false);
                 try
                 {
-                    _result.Body = SafeJsonConvert.DeserializeObject<Page<SubscriptionResource>>(_responseContent, this.Client.DeserializationSettings);
+                    _result.Body = SafeJsonConvert.DeserializeObject<Page<RuleResource>>(_responseContent, this.Client.DeserializationSettings);
                 }
                 catch (JsonException ex)
                 {

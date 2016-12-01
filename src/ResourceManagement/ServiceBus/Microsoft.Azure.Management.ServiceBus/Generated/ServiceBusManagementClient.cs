@@ -100,6 +100,11 @@ namespace Microsoft.Azure.Management.ServiceBus
         public virtual ISubscriptionsOperations Subscriptions { get; private set; }
 
         /// <summary>
+        /// Gets the IRulesOperations.
+        /// </summary>
+        public virtual IRulesOperations Rules { get; private set; }
+
+        /// <summary>
         /// Initializes a new instance of the ServiceBusManagementClient class.
         /// </summary>
         /// <param name='handlers'>
@@ -282,6 +287,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             this.Queues = new QueuesOperations(this);
             this.Topics = new TopicsOperations(this);
             this.Subscriptions = new SubscriptionsOperations(this);
+            this.Rules = new RulesOperations(this);
             this.BaseUri = new Uri("https://management.azure.com");
             this.ApiVersion = "2015-08-01";
             this.AcceptLanguage = "en-US";
