@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.ServiceBus.Models
+namespace Microsoft.Azure.Management.Relay.Models
 {
     using System;
     using System.Linq;
@@ -25,22 +25,28 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the NamespaceResource class.
         /// </summary>
-        public NamespaceResource() { }
+        public NamespaceResource()
+        {
+        }
 
         /// <summary>
         /// Initializes a new instance of the NamespaceResource class.
         /// </summary>
-        public NamespaceResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string provisioningState = default(string), NamespaceState? status = default(NamespaceState?), DateTime? createdAt = default(DateTime?), DateTime? updatedAt = default(DateTime?), string serviceBusEndpoint = default(string), bool? createACSNamespace = default(bool?), bool? enabled = default(bool?))
+        public NamespaceResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string path = default(string), Relaytype? relayType = default(Relaytype?), DateTime? createdAt = default(DateTime?), DateTime? updatedAt = default(DateTime?), int? listenerCount = default(int?), bool? requiresClientAuthorization = default(bool?), AuthorizationRules authorizationRules = default(AuthorizationRules), bool? requiresTransportSecurity = default(bool?), bool? isDynamic = default(bool?), string userMetadata = default(string), string collectionName = default(string))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
-            ProvisioningState = provisioningState;
-            Status = status;
+            Path = path;
+            RelayType = relayType;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
-            ServiceBusEndpoint = serviceBusEndpoint;
-            CreateACSNamespace = createACSNamespace;
-            Enabled = enabled;
+            ListenerCount = listenerCount;
+            RequiresClientAuthorization = requiresClientAuthorization;
+            AuthorizationRules = authorizationRules;
+            RequiresTransportSecurity = requiresTransportSecurity;
+            IsDynamic = isDynamic;
+            UserMetadata = userMetadata;
+            CollectionName = collectionName;
         }
 
         /// <summary>
@@ -49,19 +55,16 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public Sku Sku { get; set; }
 
         /// <summary>
-        /// Provisioning state of the Namespace.
+        /// The path of the relay.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
+        [JsonProperty(PropertyName = "properties.Path")]
+        public string Path { get; set; }
 
         /// <summary>
-        /// State of the namespace. Possible values include: 'Unknown',
-        /// 'Creating', 'Created', 'Activating', 'Enabling', 'Active',
-        /// 'Disabling', 'Disabled', 'SoftDeleting', 'SoftDeleted',
-        /// 'Removing', 'Removed', 'Failed'
+        /// Relay Type. Possible values include: 'NetTcp', 'Http'
         /// </summary>
-        [JsonProperty(PropertyName = "properties.status")]
-        public NamespaceState? Status { get; set; }
+        [JsonProperty(PropertyName = "properties.RelayType")]
+        public Relaytype? RelayType { get; set; }
 
         /// <summary>
         /// The time the namespace was created.
@@ -76,22 +79,47 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public DateTime? UpdatedAt { get; set; }
 
         /// <summary>
-        /// Endpoint you can use to perform ServiceBus operations.
+        /// The number of listeners for this relay
         /// </summary>
-        [JsonProperty(PropertyName = "properties.serviceBusEndpoint")]
-        public string ServiceBusEndpoint { get; set; }
+        [JsonProperty(PropertyName = "properties.ListenerCount")]
+        public int? ListenerCount { get; set; }
 
         /// <summary>
-        /// Indicates whether to create ACS namespace.
+        /// true if client authorization is needed for this relay; otherwise,
+        /// false.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.createACSNamespace")]
-        public bool? CreateACSNamespace { get; set; }
+        [JsonProperty(PropertyName = "properties.RequiresClientAuthorization")]
+        public bool? RequiresClientAuthorization { get; set; }
 
         /// <summary>
-        /// Specifies whether this instance is enabled.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.enabled")]
-        public bool? Enabled { get; set; }
+        [JsonProperty(PropertyName = "properties.AuthorizationRules")]
+        public AuthorizationRules AuthorizationRules { get; set; }
+
+        /// <summary>
+        /// true if transport security is needed for this relay; otherwise,
+        /// false.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.RequiresTransportSecurity")]
+        public bool? RequiresTransportSecurity { get; set; }
+
+        /// <summary>
+        /// true if the relay is dynamic; otherwise, false.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.IsDynamic")]
+        public bool? IsDynamic { get; set; }
+
+        /// <summary>
+        /// TheThe user metadata associated with this instance.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.UserMetadata")]
+        public string UserMetadata { get; set; }
+
+        /// <summary>
+        /// The name of the collection associated with the relay.
+        /// </summary>
+        [JsonProperty(PropertyName = "properties.CollectionName")]
+        public string CollectionName { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

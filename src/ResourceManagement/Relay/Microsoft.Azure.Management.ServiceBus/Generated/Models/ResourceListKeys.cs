@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.ServiceBus.Models
+namespace Microsoft.Azure.Management.Relay.Models
 {
     using System;
     using System.Linq;
@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Namespace/ServiceBus Connection String
+    /// Namespace/Relay Connection String
     /// </summary>
     public partial class ResourceListKeys
     {

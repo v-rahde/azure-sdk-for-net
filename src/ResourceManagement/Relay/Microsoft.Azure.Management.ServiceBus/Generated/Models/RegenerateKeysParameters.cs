@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.ServiceBus.Models
+namespace Microsoft.Azure.Management.Relay.Models
 {
     using System;
     using System.Linq;
@@ -36,7 +36,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
 
         /// <summary>
         /// Key that needs to be regenerated . Possible values include:
-        /// 'PrimaryKey', 'SecondaryKey'
+        /// 'primaryKey', 'secondaryKey'
         /// </summary>
         [JsonProperty(PropertyName = "Policykey")]
         public Policykey? Policykey { get; set; }

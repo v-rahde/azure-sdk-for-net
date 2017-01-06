@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.ServiceBus
+namespace Microsoft.Azure.Management.Relay
 {
     using System;
     using System.Collections.Generic;
@@ -23,33 +23,7 @@ namespace Microsoft.Azure.Management.ServiceBus
     public partial interface INamespacesOperations
     {
         /// <summary>
-        /// Lists all the available namespaces within the subscription
-        /// irrespective of the resourceGroups.
-        /// </summary>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<IPage<NamespaceResource>>> ListBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists the available namespaces within a resourceGroup.
-        /// </summary>
-        /// <param name='resourceGroupName'>
-        /// The name of the resource group.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<IPage<NamespaceResource>>> ListByResourceGroupWithHttpMessagesAsync(string resourceGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Creates/Updates a service namespace. Once created, this
-        /// namespace's resource manifest is immutable. This operation is
-        /// idempotent.
+        /// Create Azure Relay namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -66,11 +40,9 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<NamespaceResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, NamespaceCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NamespaceResource>> CreateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, NamespaceCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates/Updates a service namespace. Once created, this
-        /// namespace's resource manifest is immutable. This operation is
-        /// idempotent.
+        /// Create Azure Relay namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -87,7 +59,45 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<NamespaceResource>> BeginCreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, NamespaceCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<NamespaceResource>> BeginCreateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, NamespaceCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates properties in a Azure Relay namespace.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to create a Namespace Resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<NamespaceResource>> PatchWithHttpMessagesAsync(string resourceGroupName, string namespaceName, NamespaceCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Updates properties in a Azure Relay namespace.
+        /// </summary>
+        /// <param name='resourceGroupName'>
+        /// The name of the resource group.
+        /// </param>
+        /// <param name='namespaceName'>
+        /// The namespace name.
+        /// </param>
+        /// <param name='parameters'>
+        /// Parameters supplied to create a Namespace Resource.
+        /// </param>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<NamespaceResource>> BeginPatchWithHttpMessagesAsync(string resourceGroupName, string namespaceName, NamespaceCreateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes an existing namespace. This operation also removes all
         /// associated resources under the namespace.
@@ -138,6 +148,17 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<NamespaceResource>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        /// <summary>
+        /// Lists all the available namespaces within the subscription
+        /// irrespective of the resourceGroups.
+        /// </summary>
+        /// <param name='customHeaders'>
+        /// The headers that will be added to request.
+        /// </param>
+        /// <param name='cancellationToken'>
+        /// The cancellation token.
+        /// </param>
+        Task<AzureOperationResponse<IPage<NamespaceResource>>> ListBySubscriptionWithHttpMessagesAsync(Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Authorization rules for a namespace.
         /// </summary>
@@ -270,19 +291,6 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The cancellation token.
         /// </param>
         Task<AzureOperationResponse<IPage<NamespaceResource>>> ListBySubscriptionNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Lists the available namespaces within a resourceGroup.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        Task<AzureOperationResponse<IPage<NamespaceResource>>> ListByResourceGroupNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Authorization rules for a namespace.
         /// </summary>

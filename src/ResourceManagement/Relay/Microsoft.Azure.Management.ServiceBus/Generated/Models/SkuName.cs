@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.ServiceBus.Models
+namespace Microsoft.Azure.Management.Relay.Models
 {
     using Newtonsoft.Json;
     using Newtonsoft.Json.Converters;

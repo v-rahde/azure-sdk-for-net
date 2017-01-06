@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.ServiceBus.Models
+namespace Microsoft.Azure.Management.Relay.Models
 {
     using System;
     using System.Linq;
@@ -29,11 +29,16 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the Sku class.
         /// </summary>
-        public Sku(string tier, string name = default(string), int? capacity = default(int?))
+        public Sku(string name)
         {
             Name = name;
-            Tier = tier;
-            Capacity = capacity;
+        }
+        /// <summary>
+        /// Static constructor for Sku class.
+        /// </summary>
+        static Sku()
+        {
+            Tier = "Standard";
         }
 
         /// <summary>
@@ -44,26 +49,19 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public string Name { get; set; }
 
         /// <summary>
-        /// The tier of this particular SKU. Possible values include: 'Basic',
-        /// 'Standard', 'Premium'
+        /// The tier of this particular SKU
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
-        public string Tier { get; set; }
-
-        /// <summary>
-        /// The messaging units for the tier specified
-        /// </summary>
-        [JsonProperty(PropertyName = "capacity")]
-        public int? Capacity { get; set; }
+        public static string Tier { get; private set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.
         /// </summary>
         public virtual void Validate()
         {
-            if (Tier == null)
+            if (Name == null)
             {
-                throw new ValidationException(ValidationRules.CannotBeNull, "Tier");
+                throw new ValidationException(ValidationRules.CannotBeNull, "Name");
             }
         }
     }

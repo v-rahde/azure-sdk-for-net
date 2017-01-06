@@ -6,7 +6,7 @@
 // Changes may cause incorrect behavior and will be lost if the code is
 // regenerated.
 
-namespace Microsoft.Azure.Management.ServiceBus
+namespace Microsoft.Azure.Management.Relay
 {
     using System;
     using System.Collections;
@@ -23,37 +23,53 @@ namespace Microsoft.Azure.Management.ServiceBus
     public static partial class NamespacesOperationsExtensions
     {
             /// <summary>
-            /// Lists all the available namespaces within the subscription irrespective of
-            /// the resourceGroups.
+            /// Create Azure Relay namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<NamespaceResource> ListBySubscription(this INamespacesOperations operations)
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to create a Namespace Resource.
+            /// </param>
+            public static NamespaceResource Create(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((INamespacesOperations)s).ListBySubscriptionAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((INamespacesOperations)s).CreateAsync(resourceGroupName, namespaceName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all the available namespaces within the subscription irrespective of
-            /// the resourceGroups.
+            /// Create Azure Relay namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to create a Namespace Resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NamespaceResource>> ListBySubscriptionAsync(this INamespacesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NamespaceResource> CreateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Lists the available namespaces within a resourceGroup.
+            /// Create Azure Relay namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -61,34 +77,45 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
             /// </param>
-            public static IPage<NamespaceResource> ListByResourceGroup(this INamespacesOperations operations, string resourceGroupName)
+            /// <param name='namespaceName'>
+            /// The namespace name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to create a Namespace Resource.
+            /// </param>
+            public static NamespaceResource BeginCreate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((INamespacesOperations)s).ListByResourceGroupAsync(resourceGroupName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((INamespacesOperations)s).BeginCreateAsync(resourceGroupName, namespaceName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists the available namespaces within a resourceGroup.
+            /// Create Azure Relay namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
             /// The name of the resource group.
+            /// </param>
+            /// <param name='namespaceName'>
+            /// The namespace name.
+            /// </param>
+            /// <param name='parameters'>
+            /// Parameters supplied to create a Namespace Resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NamespaceResource>> ListByResourceGroupAsync(this INamespacesOperations operations, string resourceGroupName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NamespaceResource> BeginCreateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByResourceGroupWithHttpMessagesAsync(resourceGroupName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Creates/Updates a service namespace. Once created, this namespace's
-            /// resource manifest is immutable. This operation is idempotent.
+            /// Updates properties in a Azure Relay namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -102,14 +129,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='parameters'>
             /// Parameters supplied to create a Namespace Resource.
             /// </param>
-            public static NamespaceResource CreateOrUpdate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateOrUpdateParameters parameters)
+            public static NamespaceResource Patch(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((INamespacesOperations)s).CreateOrUpdateAsync(resourceGroupName, namespaceName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((INamespacesOperations)s).PatchAsync(resourceGroupName, namespaceName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates/Updates a service namespace. Once created, this namespace's
-            /// resource manifest is immutable. This operation is idempotent.
+            /// Updates properties in a Azure Relay namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -126,17 +152,16 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NamespaceResource> CreateOrUpdateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NamespaceResource> PatchAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.PatchWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Creates/Updates a service namespace. Once created, this namespace's
-            /// resource manifest is immutable. This operation is idempotent.
+            /// Updates properties in a Azure Relay namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -150,14 +175,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='parameters'>
             /// Parameters supplied to create a Namespace Resource.
             /// </param>
-            public static NamespaceResource BeginCreateOrUpdate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateOrUpdateParameters parameters)
+            public static NamespaceResource BeginPatch(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateParameters parameters)
             {
-                return Task.Factory.StartNew(s => ((INamespacesOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, namespaceName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((INamespacesOperations)s).BeginPatchAsync(resourceGroupName, namespaceName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates/Updates a service namespace. Once created, this namespace's
-            /// resource manifest is immutable. This operation is idempotent.
+            /// Updates properties in a Azure Relay namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -174,9 +198,9 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NamespaceResource> BeginCreateOrUpdateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NamespaceResource> BeginPatchAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginPatchWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -295,6 +319,36 @@ namespace Microsoft.Azure.Management.ServiceBus
             public static async Task<NamespaceResource> GetAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
+                {
+                    return _result.Body;
+                }
+            }
+
+            /// <summary>
+            /// Lists all the available namespaces within the subscription irrespective of
+            /// the resourceGroups.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            public static IPage<NamespaceResource> ListBySubscription(this INamespacesOperations operations)
+            {
+                return Task.Factory.StartNew(s => ((INamespacesOperations)s).ListBySubscriptionAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Lists all the available namespaces within the subscription irrespective of
+            /// the resourceGroups.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task<IPage<NamespaceResource>> ListBySubscriptionAsync(this INamespacesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -610,40 +664,6 @@ namespace Microsoft.Azure.Management.ServiceBus
             public static async Task<IPage<NamespaceResource>> ListBySubscriptionNextAsync(this INamespacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Lists the available namespaces within a resourceGroup.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<NamespaceResource> ListByResourceGroupNext(this INamespacesOperations operations, string nextPageLink)
-            {
-                return Task.Factory.StartNew(s => ((INamespacesOperations)s).ListByResourceGroupNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Lists the available namespaces within a resourceGroup.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<NamespaceResource>> ListByResourceGroupNextAsync(this INamespacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.ListByResourceGroupNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
