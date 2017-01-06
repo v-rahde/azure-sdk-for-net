@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Relay", "Microsoft.Azure.Management.ServiceBus\Microsoft.Azure.Management.Relay.xproj", "{13EE7CA1-BE08-46F9-A32C-03DF8EFB72EF}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Microsoft.Azure.Management.Relay", "Microsoft.Azure.Management.Relay\Microsoft.Azure.Management.Relay.xproj", "{13EE7CA1-BE08-46F9-A32C-03DF8EFB72EF}"
 EndProject
 Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "HttpRecorder", "..\..\TestFramework\Microsoft.Azure.Test.HttpRecorder\HttpRecorder.xproj", "{5D12D45A-E55F-410E-B8AF-9DC90E81B237}"
 EndProject
