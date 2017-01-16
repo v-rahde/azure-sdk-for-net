@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.Relay
     using Rest;
     using Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -39,16 +37,12 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='hybridConnectionName'>
             /// The Hybrid Connections name.
             /// </param>
-            /// <param name='value'>
-            /// Result of the List HybridConnection .
+            /// <param name='parameters'>
+            /// Parameters supplied to create a HybridConnections.
             /// </param>
-            /// <param name='nextLink'>
-            /// Link to the next set of results. Not empty if Value contains incomplete
-            /// list of HybridConnection operation
-            /// </param>
-            public static HybridConnectionListResult CreateOrUpdate(this IHybridConnectionsOperations operations, string resourceGroupName, string namespaceName, string hybridConnectionName, IList<HybridConnectionResource> value = default(IList<HybridConnectionResource>), string nextLink = default(string))
+            public static HybridConnectionResource CreateOrUpdate(this IHybridConnectionsOperations operations, string resourceGroupName, string namespaceName, string hybridConnectionName, HybridConnectionResource parameters)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, hybridConnectionName, value, nextLink).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, hybridConnectionName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -67,19 +61,15 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='hybridConnectionName'>
             /// The Hybrid Connections name.
             /// </param>
-            /// <param name='value'>
-            /// Result of the List HybridConnection .
-            /// </param>
-            /// <param name='nextLink'>
-            /// Link to the next set of results. Not empty if Value contains incomplete
-            /// list of HybridConnection operation
+            /// <param name='parameters'>
+            /// Parameters supplied to create a HybridConnections.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<HybridConnectionListResult> CreateOrUpdateAsync(this IHybridConnectionsOperations operations, string resourceGroupName, string namespaceName, string hybridConnectionName, IList<HybridConnectionResource> value = default(IList<HybridConnectionResource>), string nextLink = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<HybridConnectionResource> CreateOrUpdateAsync(this IHybridConnectionsOperations operations, string resourceGroupName, string namespaceName, string hybridConnectionName, HybridConnectionResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, hybridConnectionName, value, nextLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, hybridConnectionName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -143,7 +133,7 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='hybridConnectionName'>
             /// The name of the hybrid connection.
             /// </param>
-            public static IPage<HybridConnectionResource> Get(this IHybridConnectionsOperations operations, string resourceGroupName, string namespaceName, string hybridConnectionName)
+            public static HybridConnectionResource Get(this IHybridConnectionsOperations operations, string resourceGroupName, string namespaceName, string hybridConnectionName)
             {
                 return operations.GetAsync(resourceGroupName, namespaceName, hybridConnectionName).GetAwaiter().GetResult();
             }
@@ -166,7 +156,7 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<HybridConnectionResource>> GetAsync(this IHybridConnectionsOperations operations, string resourceGroupName, string namespaceName, string hybridConnectionName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<HybridConnectionResource> GetAsync(this IHybridConnectionsOperations operations, string resourceGroupName, string namespaceName, string hybridConnectionName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, namespaceName, hybridConnectionName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -186,9 +176,9 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='namespaceName'>
             /// The namespace name.
             /// </param>
-            public static IPage<HybridConnectionResource> ListByNameSpace(this IHybridConnectionsOperations operations, string resourceGroupName, string namespaceName)
+            public static IPage<HybridConnectionResource> ListAll(this IHybridConnectionsOperations operations, string resourceGroupName, string namespaceName)
             {
-                return operations.ListByNameSpaceAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
+                return operations.ListAllAsync(resourceGroupName, namespaceName).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -206,9 +196,9 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<HybridConnectionResource>> ListByNameSpaceAsync(this IHybridConnectionsOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<HybridConnectionResource>> ListAllAsync(this IHybridConnectionsOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByNameSpaceWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListAllWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -491,40 +481,6 @@ namespace Microsoft.Azure.Management.Relay
             }
 
             /// <summary>
-            /// Returns the description for the specified HybridConnection.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static IPage<HybridConnectionResource> GetNext(this IHybridConnectionsOperations operations, string nextPageLink)
-            {
-                return operations.GetNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns the description for the specified HybridConnection.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<IPage<HybridConnectionResource>> GetNextAsync(this IHybridConnectionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
             /// Lists the HybridConnection within the namespace.
             /// </summary>
             /// <param name='operations'>
@@ -533,9 +489,9 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<HybridConnectionResource> ListByNameSpaceNext(this IHybridConnectionsOperations operations, string nextPageLink)
+            public static IPage<HybridConnectionResource> ListAllNext(this IHybridConnectionsOperations operations, string nextPageLink)
             {
-                return operations.ListByNameSpaceNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListAllNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -550,9 +506,9 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<HybridConnectionResource>> ListByNameSpaceNextAsync(this IHybridConnectionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<HybridConnectionResource>> ListAllNextAsync(this IHybridConnectionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListByNameSpaceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

@@ -24,8 +24,7 @@ namespace Microsoft.Azure.Management.Relay
     public partial interface IWCFRelaysOperations
     {
         /// <summary>
-        /// Creates or Updates a service WCFRelays. This operation is
-        /// idempotent.
+        /// Creates or Updates a WCFRelays. This operation is idempotent.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -36,12 +35,8 @@ namespace Microsoft.Azure.Management.Relay
         /// <param name='relayName'>
         /// The name of the relay.
         /// </param>
-        /// <param name='value'>
-        /// Result of the List WcfRelays .
-        /// </param>
-        /// <param name='nextLink'>
-        /// Link to the next set of results. Not empty if Value contains
-        /// incomplete list of WcfRelays operation
+        /// <param name='parameters'>
+        /// Parameters supplied to create a WCFRelays.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -58,7 +53,7 @@ namespace Microsoft.Azure.Management.Relay
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<WcfRelaysListResult>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string relayName, IList<WcfRelaysResource> value = default(IList<WcfRelaysResource>), string nextLink = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<WcfRelaysResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string relayName, WcfRelaysResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a WCFRelays .
         /// </summary>
@@ -111,7 +106,7 @@ namespace Microsoft.Azure.Management.Relay
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<object>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string relayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<WcfRelaysResource>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string relayName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the WCFRelays within the namespace.
         /// </summary>
@@ -300,28 +295,6 @@ namespace Microsoft.Azure.Management.Relay
         /// Thrown when a required parameter is null
         /// </exception>
         Task<AzureOperationResponse<ResourceListKeys>> RegenerateKeysWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName, Policykey? policykey = default(Policykey?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
-        /// Returns the description for the specified WCFRelays.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<object>> GetNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the WCFRelays within the namespace.
         /// </summary>

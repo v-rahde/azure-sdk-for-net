@@ -25,6 +25,11 @@
     <DnxInvisibleCompile Include="ScenarioTests\OperationsTest.cs" />
     <DnxInvisibleCompile Include="ScenarioTests\OriginTests.cs" />
     <DnxInvisibleCompile Include="ScenarioTests\ProfileTests.cs" />
+    <DnxInvisibleCompile Include="Tests\ScenarioTests.QueuesTests.CRUD.cs" />
+    <DnxInvisibleCompile Include="Tests\ScenarioTests.QueuesTests.CRUDAuthorizationRules.cs" />
+    <DnxInvisibleCompile Include="Tests\ScenarioTests.SubscriptionsTests.CRUD.cs" />
+    <DnxInvisibleCompile Include="Tests\ScenarioTests.TopicsTests.CRUD.cs" />
+    <DnxInvisibleCompile Include="Tests\ScenarioTests.TopicsTests.CRUDAuthorizationRules.cs" />
   </ItemGroup>
   <Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.targets" Condition="'$(VSToolsPath)' != ''" />
 </Project>

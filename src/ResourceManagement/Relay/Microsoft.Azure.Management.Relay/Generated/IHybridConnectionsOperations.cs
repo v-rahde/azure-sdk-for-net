@@ -36,12 +36,8 @@ namespace Microsoft.Azure.Management.Relay
         /// <param name='hybridConnectionName'>
         /// The Hybrid Connections name.
         /// </param>
-        /// <param name='value'>
-        /// Result of the List HybridConnection .
-        /// </param>
-        /// <param name='nextLink'>
-        /// Link to the next set of results. Not empty if Value contains
-        /// incomplete list of HybridConnection operation
+        /// <param name='parameters'>
+        /// Parameters supplied to create a HybridConnections.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -58,7 +54,7 @@ namespace Microsoft.Azure.Management.Relay
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<HybridConnectionListResult>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string hybridConnectionName, IList<HybridConnectionResource> value = default(IList<HybridConnectionResource>), string nextLink = default(string), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<HybridConnectionResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string hybridConnectionName, HybridConnectionResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a HybridConnections .
         /// </summary>
@@ -111,7 +107,7 @@ namespace Microsoft.Azure.Management.Relay
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<HybridConnectionResource>>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string hybridConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<HybridConnectionResource>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string hybridConnectionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Lists the HybridConnection within the namespace.
         /// </summary>
@@ -136,7 +132,7 @@ namespace Microsoft.Azure.Management.Relay
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<HybridConnectionResource>>> ListByNameSpaceWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<HybridConnectionResource>>> ListAllWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Creates or Updates an authorization rule for a HybridConnections
         /// </summary>
@@ -302,28 +298,6 @@ namespace Microsoft.Azure.Management.Relay
         /// </exception>
         Task<AzureOperationResponse<ResourceListKeys>> RegenerateKeysWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string hybridConnectionName, string authorizationRuleName, Policykey? policykey = default(Policykey?), Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns the description for the specified HybridConnection.
-        /// </summary>
-        /// <param name='nextPageLink'>
-        /// The NextLink from the previous successful call to List operation.
-        /// </param>
-        /// <param name='customHeaders'>
-        /// The headers that will be added to request.
-        /// </param>
-        /// <param name='cancellationToken'>
-        /// The cancellation token.
-        /// </param>
-        /// <exception cref="ErrorResponseException">
-        /// Thrown when the operation returned an invalid status code
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.SerializationException">
-        /// Thrown when unable to deserialize the response
-        /// </exception>
-        /// <exception cref="Microsoft.Rest.ValidationException">
-        /// Thrown when a required parameter is null
-        /// </exception>
-        Task<AzureOperationResponse<IPage<HybridConnectionResource>>> GetNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
-        /// <summary>
         /// Lists the HybridConnection within the namespace.
         /// </summary>
         /// <param name='nextPageLink'>
@@ -344,7 +318,7 @@ namespace Microsoft.Azure.Management.Relay
         /// <exception cref="Microsoft.Rest.ValidationException">
         /// Thrown when a required parameter is null
         /// </exception>
-        Task<AzureOperationResponse<IPage<HybridConnectionResource>>> ListByNameSpaceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<HybridConnectionResource>>> ListAllNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }
 

@@ -14,18 +14,18 @@
 //  limitations under the License.
 
 
-namespace ServiceBus.Tests.ScenarioTests
+namespace Relay.Tests.ScenarioTests
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Net;
-    using Microsoft.Azure.Management.ServiceBus;
-    using Microsoft.Azure.Management.ServiceBus.Models;
+    using Microsoft.Azure.Management.Relay;
+    using Microsoft.Azure.Management.Relay.Models;
     using Microsoft.Azure.Test.HttpRecorder;
     using Microsoft.Rest.Azure;
     using Microsoft.Rest.ClientRuntime.Azure.TestFramework;
-    using TestHelper;
+    using Relay.Tests.TestHelper;
     using Xunit;
     public partial class ScenarioTests 
     {
@@ -41,14 +41,14 @@ namespace ServiceBus.Tests.ScenarioTests
                 var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
                 if (string.IsNullOrWhiteSpace(resourceGroup))
                 {
-                    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
+                    resourceGroup = TestUtilities.GenerateName(RelayManagementHelper.ResourceGroupPrefix);
                     this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
                 }
 
                 // Create a namespace
-                var namespaceName = TestUtilities.GenerateName(ServiceBusManagementHelper.NamespacePrefix);
-                var createNamespaceResponse = ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
-                    new NamespaceCreateOrUpdateParameters()
+                var namespaceName = TestUtilities.GenerateName(RelayManagementHelper.NamespacePrefix);
+                var createNamespaceResponse =  RelayManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
+                    new NamespaceResource()
                     {
                         Location = location,
                     });
@@ -59,28 +59,25 @@ namespace ServiceBus.Tests.ScenarioTests
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
                 // Get the created namespace
-                var getNamespaceResponse = ServiceBusManagementClient.Namespaces.Get(resourceGroup, namespaceName);
-                if (string.Compare(getNamespaceResponse.ProvisioningState, "Succeeded", true) != 0)
-                    TestUtilities.Wait(TimeSpan.FromSeconds(5));
+                var getNamespaceResponse = RelayManagementClient.Namespaces.Get(resourceGroup, namespaceName);
+                
 
-                getNamespaceResponse = ServiceBusManagementClient.Namespaces.Get(resourceGroup, namespaceName);
-                Assert.NotNull(getNamespaceResponse);
-                Assert.Equal("Succeeded", getNamespaceResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
-                Assert.Equal(NamespaceState.Active , getNamespaceResponse.Status);
+                getNamespaceResponse = RelayManagementClient.Namespaces.Get(resourceGroup, namespaceName);
+                Assert.NotNull(getNamespaceResponse);               
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
 
                 // Create a namespace AuthorizationRule
-                var authorizationRuleName = TestUtilities.GenerateName(ServiceBusManagementHelper.AuthorizationRulesPrefix);
-                string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
+                var authorizationRuleName = TestUtilities.GenerateName(RelayManagementHelper.AuthorizationRulesPrefix);
+                string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", RelayManagementHelper.GenerateRandomKey());
                 var createAutorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters()
                 {
                     Name = authorizationRuleName,
                     Rights = new List<AccessRights?>() { AccessRights.Listen, AccessRights.Send }
                 };
 
-                var jsonStr = ServiceBusManagementHelper.ConvertObjectToJSon(createAutorizationRuleParameter);
+                var jsonStr = RelayManagementHelper.ConvertObjectToJSon(createAutorizationRuleParameter);
 
-                var createNamespaceAuthorizationRuleResponse = ServiceBusManagementClient.Namespaces.CreateOrUpdateAuthorizationRule(resourceGroup, namespaceName,
+                var createNamespaceAuthorizationRuleResponse = RelayManagementClient.Namespaces.CreateOrUpdateAuthorizationRule(resourceGroup, namespaceName,
                     authorizationRuleName, createAutorizationRuleParameter);
                 Assert.NotNull(createNamespaceAuthorizationRuleResponse);
                 Assert.True(createNamespaceAuthorizationRuleResponse.Rights.Count == createAutorizationRuleParameter.Rights.Count);
@@ -90,15 +87,15 @@ namespace ServiceBus.Tests.ScenarioTests
                 }
 
                 // Get default namespace AuthorizationRules
-                var getNamespaceAuthorizationRulesResponse = ServiceBusManagementClient.Namespaces.GetAuthorizationRule(resourceGroup, namespaceName, ServiceBusManagementHelper.DefaultNamespaceAuthorizationRule);
+                var getNamespaceAuthorizationRulesResponse = RelayManagementClient.Namespaces.GetAuthorizationRule(resourceGroup, namespaceName, RelayManagementHelper.DefaultNamespaceAuthorizationRule);
                 Assert.NotNull(getNamespaceAuthorizationRulesResponse);
-                Assert.Equal(getNamespaceAuthorizationRulesResponse.Name, ServiceBusManagementHelper.DefaultNamespaceAuthorizationRule);
+                Assert.Equal(getNamespaceAuthorizationRulesResponse.Name, RelayManagementHelper.DefaultNamespaceAuthorizationRule);
                 Assert.True(getNamespaceAuthorizationRulesResponse.Rights.Any(r => r == AccessRights.Listen));
                 Assert.True(getNamespaceAuthorizationRulesResponse.Rights.Any(r => r == AccessRights.Send));
                 Assert.True(getNamespaceAuthorizationRulesResponse.Rights.Any(r => r == AccessRights.Manage));
 
                 // Get created namespace AuthorizationRules
-                getNamespaceAuthorizationRulesResponse = ServiceBusManagementClient.Namespaces.GetAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);
+                getNamespaceAuthorizationRulesResponse = RelayManagementClient.Namespaces.GetAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);
                 Assert.NotNull(getNamespaceAuthorizationRulesResponse);
                 Assert.True(getNamespaceAuthorizationRulesResponse.Rights.Count == createAutorizationRuleParameter.Rights.Count);
                 foreach (var right in createAutorizationRuleParameter.Rights)
@@ -107,18 +104,18 @@ namespace ServiceBus.Tests.ScenarioTests
                 }
 
                 // Get all namespaces AuthorizationRules 
-                var getAllNamespaceAuthorizationRulesResponse = ServiceBusManagementClient.Namespaces.ListAuthorizationRules(resourceGroup, namespaceName);
+                var getAllNamespaceAuthorizationRulesResponse = RelayManagementClient.Namespaces.ListAuthorizationRules(resourceGroup, namespaceName);
                 Assert.NotNull(getAllNamespaceAuthorizationRulesResponse);
                 Assert.True(getAllNamespaceAuthorizationRulesResponse.Count() > 1);
                 Assert.True(getAllNamespaceAuthorizationRulesResponse.Any(ns => ns.Name == authorizationRuleName));
-                Assert.True(getAllNamespaceAuthorizationRulesResponse.Any(auth => auth.Name == ServiceBusManagementHelper.DefaultNamespaceAuthorizationRule));
+                Assert.True(getAllNamespaceAuthorizationRulesResponse.Any(auth => auth.Name == RelayManagementHelper.DefaultNamespaceAuthorizationRule));
 
                 // Update namespace authorizationRule
-                string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
+                string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", RelayManagementHelper.GenerateRandomKey());
                 SharedAccessAuthorizationRuleCreateOrUpdateParameters updateNamespaceAuthorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters();
                 updateNamespaceAuthorizationRuleParameter.Rights = new List<AccessRights?>() { AccessRights.Listen };
 
-                var updateNamespaceAuthorizationRuleResponse = ServiceBusManagementClient.Namespaces.CreateOrUpdateAuthorizationRule(resourceGroup,
+                var updateNamespaceAuthorizationRuleResponse = RelayManagementClient.Namespaces.CreateOrUpdateAuthorizationRule(resourceGroup,
                     namespaceName, authorizationRuleName, updateNamespaceAuthorizationRuleParameter);
 
                 Assert.NotNull(updateNamespaceAuthorizationRuleResponse);
@@ -130,7 +127,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 }
 
                 // Get the updated namespace AuthorizationRule
-                var getNamespaceAuthorizationRuleResponse = ServiceBusManagementClient.Namespaces.GetAuthorizationRule(resourceGroup, namespaceName,                     authorizationRuleName);
+                var getNamespaceAuthorizationRuleResponse = RelayManagementClient.Namespaces.GetAuthorizationRule(resourceGroup, namespaceName,                     authorizationRuleName);
                 Assert.NotNull(getNamespaceAuthorizationRuleResponse);
                 Assert.Equal(authorizationRuleName, getNamespaceAuthorizationRuleResponse.Name);
                 Assert.True(getNamespaceAuthorizationRuleResponse.Rights.Count == updateNamespaceAuthorizationRuleParameter.Rights.Count);
@@ -140,7 +137,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 }
 
                 // Get the connectionString to the namespace for a Authorization rule created
-                var listKeysResponse = ServiceBusManagementClient.Namespaces.ListKeys(resourceGroup, namespaceName, authorizationRuleName);
+                var listKeysResponse = RelayManagementClient.Namespaces.ListKeys(resourceGroup, namespaceName, authorizationRuleName);
                 Assert.NotNull(listKeysResponse);
                 Assert.NotNull(listKeysResponse.PrimaryConnectionString);
                 Assert.NotNull(listKeysResponse.SecondaryConnectionString);
@@ -149,18 +146,18 @@ namespace ServiceBus.Tests.ScenarioTests
                 var regenerateKeysParameters = new RegenerateKeysParameters();
                 regenerateKeysParameters.Policykey = Policykey.PrimaryKey;
 
-                var regenerateKeysResponse = ServiceBusManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, regenerateKeysParameters);
+                var regenerateKeysResponse = RelayManagementClient.Namespaces.RegenerateKeys(resourceGroup, namespaceName, authorizationRuleName, regenerateKeysParameters.Policykey);
                 Assert.NotNull(regenerateKeysResponse);
                 Assert.NotEqual(regenerateKeysResponse.PrimaryKey, listKeysResponse.PrimaryKey);
                 Assert.Equal(regenerateKeysResponse.SecondaryKey, listKeysResponse.SecondaryKey);
 
                 // Delete namespace authorizationRule
-                ServiceBusManagementClient.Namespaces.DeleteAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);
+                RelayManagementClient.Namespaces.DeleteAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
                 try
                 {
-                    ServiceBusManagementClient.Namespaces.GetAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);
+                    RelayManagementClient.Namespaces.GetAuthorizationRule(resourceGroup, namespaceName, authorizationRuleName);
                     Assert.True(false, "this step should have failed");
                 }
                 catch (CloudException ex)
@@ -171,7 +168,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 try
                 {
                     // Delete namespace
-                    ServiceBusManagementClient.Namespaces.Delete(resourceGroup, namespaceName); 
+                    RelayManagementClient.Namespaces.Delete(resourceGroup, namespaceName); 
                 }
                 catch (Exception ex)
                 {

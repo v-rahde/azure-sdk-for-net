@@ -1,15 +1,15 @@
 ﻿{
-  "version": "3.0.0-preview",
-  "description": "Microsoft Azure CDN Management Library",
+  "version": "0.0.1-preview",
+  "description": "Microsoft Azure Relay Management Library",
   "authors": [ "Microsoft" ],
 
   "packOptions": {
-    "summary": "Microsoft Azure CDN Management Library",
+    "summary": "Microsoft Azure Relay Management Library",
     "iconUrl": "http://go.microsoft.com/fwlink/?LinkID=288890",
     "projectUrl": "https://github.com/Azure/azure-sdk-for-net",
     "licenseUrl": "https://raw.githubusercontent.com/Microsoft/dotnet/master/LICENSE",
-    "tags": [ "Microsoft Azure CDN management", "CDN", "Cdn management", "REST HTTP client", "windowsazureofficial" ],
-    "requireLicenseAcceptance":  true,
+    "tags": [ "Microsoft Azure Relay management", "Relay", "Relay management", "REST HTTP client", "windowsazureofficial" ],
+    "requireLicenseAcceptance":  true
   },
 
   "buildOptions": {

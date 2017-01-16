@@ -6,7 +6,7 @@
 @echo off
 set autoRestVersion=1.0.0-Nightly20161215
 if  "%1" == "" (
-    set specFile="d:\SwaggerWork\v-ajnava_Fork\azure-rest-api-specs\arm-relay\2016-07-01\relay.json"
+    set specFile="\\v-ajnava01\Shared\arm-relay\2016-07-01\relay.json"
 ) else (
     set specFile="%1"
 )

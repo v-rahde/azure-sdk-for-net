@@ -13,8 +13,6 @@ namespace Microsoft.Azure.Management.Relay
     using Rest;
     using Rest.Azure;
     using Models;
-    using System.Collections;
-    using System.Collections.Generic;
     using System.Threading;
     using System.Threading.Tasks;
 
@@ -24,7 +22,7 @@ namespace Microsoft.Azure.Management.Relay
     public static partial class WCFRelaysOperationsExtensions
     {
             /// <summary>
-            /// Creates or Updates a service WCFRelays. This operation is idempotent.
+            /// Creates or Updates a WCFRelays. This operation is idempotent.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -38,20 +36,16 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='relayName'>
             /// The name of the relay.
             /// </param>
-            /// <param name='value'>
-            /// Result of the List WcfRelays .
+            /// <param name='parameters'>
+            /// Parameters supplied to create a WCFRelays.
             /// </param>
-            /// <param name='nextLink'>
-            /// Link to the next set of results. Not empty if Value contains incomplete
-            /// list of WcfRelays operation
-            /// </param>
-            public static WcfRelaysListResult CreateOrUpdate(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, IList<WcfRelaysResource> value = default(IList<WcfRelaysResource>), string nextLink = default(string))
+            public static WcfRelaysResource CreateOrUpdate(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, WcfRelaysResource parameters)
             {
-                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, relayName, value, nextLink).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, relayName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates or Updates a service WCFRelays. This operation is idempotent.
+            /// Creates or Updates a WCFRelays. This operation is idempotent.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -65,19 +59,15 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='relayName'>
             /// The name of the relay.
             /// </param>
-            /// <param name='value'>
-            /// Result of the List WcfRelays .
-            /// </param>
-            /// <param name='nextLink'>
-            /// Link to the next set of results. Not empty if Value contains incomplete
-            /// list of WcfRelays operation
+            /// <param name='parameters'>
+            /// Parameters supplied to create a WCFRelays.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<WcfRelaysListResult> CreateOrUpdateAsync(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, IList<WcfRelaysResource> value = default(IList<WcfRelaysResource>), string nextLink = default(string), CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<WcfRelaysResource> CreateOrUpdateAsync(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, WcfRelaysResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, relayName, value, nextLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, relayName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -141,7 +131,7 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='relayName'>
             /// The name of the relay.
             /// </param>
-            public static object Get(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName)
+            public static WcfRelaysResource Get(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName)
             {
                 return operations.GetAsync(resourceGroupName, namespaceName, relayName).GetAwaiter().GetResult();
             }
@@ -164,7 +154,7 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<object> GetAsync(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<WcfRelaysResource> GetAsync(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.GetWithHttpMessagesAsync(resourceGroupName, namespaceName, relayName, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -481,40 +471,6 @@ namespace Microsoft.Azure.Management.Relay
             public static async Task<ResourceListKeys> RegenerateKeysAsync(this IWCFRelaysOperations operations, string resourceGroupName, string namespaceName, string relayName, string authorizationRuleName, Policykey? policykey = default(Policykey?), CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.RegenerateKeysWithHttpMessagesAsync(resourceGroupName, namespaceName, relayName, authorizationRuleName, policykey, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Returns the description for the specified WCFRelays.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            public static object GetNext(this IWCFRelaysOperations operations, string nextPageLink)
-            {
-                return operations.GetNextAsync(nextPageLink).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Returns the description for the specified WCFRelays.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='nextPageLink'>
-            /// The NextLink from the previous successful call to List operation.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<object> GetNextAsync(this IWCFRelaysOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.GetNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

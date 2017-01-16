@@ -36,9 +36,9 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='parameters'>
             /// Parameters supplied to create a Namespace Resource.
             /// </param>
-            public static NamespaceResource Create(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceResource parameters)
+            public static NamespaceResource CreateOrUpdate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceResource parameters)
             {
-                return operations.CreateAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
+                return operations.CreateOrUpdateAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -59,16 +59,16 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NamespaceResource> CreateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NamespaceResource> CreateOrUpdateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.CreateWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Updates properties of Azure Relay namespace.
+            /// Updates specified namespace properties
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -88,7 +88,7 @@ namespace Microsoft.Azure.Management.Relay
             }
 
             /// <summary>
-            /// Updates properties of Azure Relay namespace.
+            /// Updates specified namespace properties
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -199,9 +199,9 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<NamespaceResource> List(this INamespacesOperations operations)
+            public static IPage<NamespaceResource> ListBySubscription(this INamespacesOperations operations)
             {
-                return operations.ListAsync().GetAwaiter().GetResult();
+                return operations.ListBySubscriptionAsync().GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -214,9 +214,9 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NamespaceResource>> ListAsync(this INamespacesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<NamespaceResource>> ListBySubscriptionAsync(this INamespacesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -298,7 +298,6 @@ namespace Microsoft.Azure.Management.Relay
 
             /// <summary>
             /// Creates or Updates an authorization rule for a namespace
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639410.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -322,7 +321,6 @@ namespace Microsoft.Azure.Management.Relay
 
             /// <summary>
             /// Creates or Updates an authorization rule for a namespace
-            /// <see href="https://msdn.microsoft.com/en-us/library/azure/mt639410.aspx" />
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -554,9 +552,9 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='parameters'>
             /// Parameters supplied to create a Namespace Resource.
             /// </param>
-            public static NamespaceResource BeginCreate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceResource parameters)
+            public static NamespaceResource BeginCreateOrUpdate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceResource parameters)
             {
-                return operations.BeginCreateAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
+                return operations.BeginCreateOrUpdateAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -577,55 +575,9 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NamespaceResource> BeginCreateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceResource parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NamespaceResource> BeginCreateOrUpdateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.BeginCreateWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
-                {
-                    return _result.Body;
-                }
-            }
-
-            /// <summary>
-            /// Updates properties of Azure Relay namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create a Namespace Resource.
-            /// </param>
-            public static NamespaceResource BeginPatch(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceResource parameters)
-            {
-                return operations.BeginPatchAsync(resourceGroupName, namespaceName, parameters).GetAwaiter().GetResult();
-            }
-
-            /// <summary>
-            /// Updates properties of Azure Relay namespace.
-            /// </summary>
-            /// <param name='operations'>
-            /// The operations group for this extension method.
-            /// </param>
-            /// <param name='resourceGroupName'>
-            /// The name of the resource group.
-            /// </param>
-            /// <param name='namespaceName'>
-            /// The namespace name.
-            /// </param>
-            /// <param name='parameters'>
-            /// Parameters supplied to create a Namespace Resource.
-            /// </param>
-            /// <param name='cancellationToken'>
-            /// The cancellation token.
-            /// </param>
-            public static async Task<NamespaceResource> BeginPatchAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceResource parameters, CancellationToken cancellationToken = default(CancellationToken))
-            {
-                using (var _result = await operations.BeginPatchWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
@@ -680,9 +632,9 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<NamespaceResource> ListNext(this INamespacesOperations operations, string nextPageLink)
+            public static IPage<NamespaceResource> ListBySubscriptionNext(this INamespacesOperations operations, string nextPageLink)
             {
-                return operations.ListNextAsync(nextPageLink).GetAwaiter().GetResult();
+                return operations.ListBySubscriptionNextAsync(nextPageLink).GetAwaiter().GetResult();
             }
 
             /// <summary>
@@ -698,9 +650,9 @@ namespace Microsoft.Azure.Management.Relay
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NamespaceResource>> ListNextAsync(this INamespacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<NamespaceResource>> ListBySubscriptionNextAsync(this INamespacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

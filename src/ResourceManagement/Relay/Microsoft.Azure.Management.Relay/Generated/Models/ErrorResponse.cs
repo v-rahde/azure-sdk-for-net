@@ -15,8 +15,8 @@ namespace Microsoft.Azure.Management.Relay.Models
     using System.Linq;
 
     /// <summary>
-    /// Error reponse indicates CDN service is not able to process the incoming
-    /// request. The reason is provided in the error message.
+    /// Error reponse indicates Realy service is not able to process the
+    /// incoming request. The reason is provided in the error message.
     /// </summary>
     public partial class ErrorResponse
     {

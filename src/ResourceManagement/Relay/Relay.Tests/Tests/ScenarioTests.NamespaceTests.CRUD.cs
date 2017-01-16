@@ -50,8 +50,8 @@ namespace Relay.Tests.ScenarioTests
                         Location = location,
                         Sku = new Sku
                         {
-                            Name = "Standard",
-                            Tier = "Standard"
+                            Name = "Standard"
+                           
                         }
                     });
 
@@ -61,14 +61,11 @@ namespace Relay.Tests.ScenarioTests
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
                 // Get the created namespace
-                var getNamespaceResponse = RelayManagementClient.Namespaces.Get(resourceGroup, namespaceName);
-                if (string.Compare(getNamespaceResponse.ProvisioningState, "Succeeded", true) != 0)
-                    TestUtilities.Wait(TimeSpan.FromSeconds(5));
-
+                var getNamespaceResponse = RelayManagementClient.Namespaces.Get(resourceGroup, namespaceName);            
+                   
                 getNamespaceResponse = RelayManagementClient.Namespaces.Get(resourceGroup, namespaceName);
                 Assert.NotNull(getNamespaceResponse);
-                Assert.Equal("Succeeded", getNamespaceResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
-                Assert.Equal(NamespaceState.Active, getNamespaceResponse.Status);
+               
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
 
                 // Get all namespaces created within a resourceGroup
@@ -79,7 +76,7 @@ namespace Relay.Tests.ScenarioTests
                 Assert.True(getAllNamespacesResponse.All(ns => ns.Id.Contains(resourceGroup)));
 
                 // Get all namespaces created within the subscription irrespective of the resourceGroup
-                getAllNamespacesResponse = RelayManagementClient.Namespaces.List();
+                getAllNamespacesResponse = RelayManagementClient.Namespaces.ListBySubscription();
                 Assert.NotNull(getAllNamespacesResponse);
                 Assert.True(getAllNamespacesResponse.Count() >= 1);
                 Assert.True(getAllNamespacesResponse.Any(ns => ns.Name == namespaceName));
@@ -97,7 +94,7 @@ namespace Relay.Tests.ScenarioTests
                         }
                 };
 
-                var updateNamespaceResponse = RelayManagementClient.Namespaces.Create(resourceGroup, namespaceName, updateNamespaceParameter);
+                var updateNamespaceResponse = RelayManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName, updateNamespaceParameter);
 
                 TestUtilities.Wait(TimeSpan.FromSeconds(5));
 
