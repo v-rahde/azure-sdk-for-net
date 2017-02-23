@@ -96,7 +96,7 @@ namespace EventHub.Tests.TestHelper
             string location,
             string scaleUnit = null)
         {
-            var namespaceParameter = new NamespaceCreateOrUpdateParameters()
+            var namespaceParameter = new NamespaceResource()
             {
                 Location = location
             };            

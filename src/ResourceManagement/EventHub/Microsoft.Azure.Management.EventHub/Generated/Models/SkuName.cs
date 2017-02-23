@@ -19,6 +19,5 @@ namespace Microsoft.Azure.Management.EventHub.Models
     {
         public const string Basic = "Basic";
         public const string Standard = "Standard";
-        public const string Premium = "Premium";
     }
 }

@@ -19,7 +19,7 @@ namespace Microsoft.Azure.Management.EventHub
     using Models;
 
     /// <summary>
-    /// Azure EventHub client
+    /// Azure Event Hubs client
     /// </summary>
     public partial interface IEventHubManagementClient : IDisposable
     {
@@ -44,14 +44,14 @@ namespace Microsoft.Azure.Management.EventHub
         ServiceClientCredentials Credentials { get; }
 
         /// <summary>
-        /// Subscription credentials which uniquely identify Microsoft Azure
+        /// Subscription credentials that uniquely identify a Microsoft Azure
         /// subscription. The subscription ID forms part of the URI for every
         /// service call.
         /// </summary>
         string SubscriptionId { get; set; }
 
         /// <summary>
-        /// Client Api Version.
+        /// Client API Version.
         /// </summary>
         string ApiVersion { get; }
 

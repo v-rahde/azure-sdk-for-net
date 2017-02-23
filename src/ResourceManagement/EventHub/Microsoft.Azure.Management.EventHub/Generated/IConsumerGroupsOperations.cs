@@ -23,23 +23,23 @@ namespace Microsoft.Azure.Management.EventHub
     public partial interface IConsumerGroupsOperations
     {
         /// <summary>
-        /// Creates/Updates a consumer group as a nested resource within a
-        /// namespace.
+        /// Creates or updates an Event Hubs consumer group as a nested
+        /// resource within a namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Resource Group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The Namespace Name within the Resource Group
         /// </param>
         /// <param name='eventHubName'>
-        /// The EventHub name.
+        /// The EventHub name
         /// </param>
         /// <param name='consumerGroupName'>
-        /// The Consumer Group name.
+        /// The consumerGroupName within the EventHub
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to create a Consumer Group Resource.
+        /// Parameters supplied to create a consumer group resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -47,22 +47,22 @@ namespace Microsoft.Azure.Management.EventHub
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<ConsumerGroupResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, ConsumerGroupCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<ConsumerGroupResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, ConsumerGroupResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Deletes an ConsumerGroup from the specified EventHub and resource
+        /// Deletes a consumer group from the specified Event Hub and resource
         /// group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Resource Group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The Namespace Name within the Resource Group
         /// </param>
         /// <param name='eventHubName'>
-        /// The EventHub name.
+        /// The EventHub name
         /// </param>
         /// <param name='consumerGroupName'>
-        /// The Consumer Group name.
+        /// The consumerGroupName within the EventHub
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -72,20 +72,19 @@ namespace Microsoft.Azure.Management.EventHub
         /// </param>
         Task<AzureOperationResponse> DeleteWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Returns an Consumer Group description for the specified Consumer
-        /// Group.
+        /// Gets a description for the specified consumer group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Resource Group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The Namespace Name within the Resource Group
         /// </param>
         /// <param name='eventHubName'>
-        /// The EventHub name.
+        /// The EventHub name
         /// </param>
         /// <param name='consumerGroupName'>
-        /// The Consumer Group name.
+        /// The consumerGroupName within the EventHub
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -95,17 +94,17 @@ namespace Microsoft.Azure.Management.EventHub
         /// </param>
         Task<AzureOperationResponse<ConsumerGroupResource>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Enumerates the consumer groups in a namespace. An empty feed is
-        /// returned if no consumer group exists in the namespace.
+        /// Gets all the consumer groups in a eventhub. An empty feed is
+        /// returned if no consumer group exists in the eventhub.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Resource Group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The Namespace Name within the Resource Group
         /// </param>
         /// <param name='eventHubName'>
-        /// The EventHub name.
+        /// The EventHub name
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -113,10 +112,10 @@ namespace Microsoft.Azure.Management.EventHub
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<ConsumerGroupResource>>> ListAllWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ConsumerGroupResource>>> ListByEventhubWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Enumerates the consumer groups in a namespace. An empty feed is
-        /// returned if no consumer group exists in the namespace.
+        /// Gets all the consumer groups in a eventhub. An empty feed is
+        /// returned if no consumer group exists in the eventhub.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -127,6 +126,6 @@ namespace Microsoft.Azure.Management.EventHub
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<ConsumerGroupResource>>> ListAllNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<ConsumerGroupResource>>> ListByEventhubNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

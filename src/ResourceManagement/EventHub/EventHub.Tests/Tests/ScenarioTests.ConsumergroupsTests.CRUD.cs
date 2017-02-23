@@ -36,17 +36,19 @@ namespace EventHub.Tests.ScenarioTests
                 InitializeClients(context);
                 var location = EventHubManagementHelper.DefaultLocation;
 
-                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
-                if (string.IsNullOrWhiteSpace(resourceGroup))
-                {
-                    resourceGroup = TestUtilities.GenerateName(EventHubManagementHelper.ResourceGroupPrefix);
-                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
-                }
+                //var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                //if (string.IsNullOrWhiteSpace(resourceGroup))
+                //{
+                //    resourceGroup = TestUtilities.GenerateName(EventHubManagementHelper.ResourceGroupPrefix);
+                //    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                //}
+
+                var resourceGroup = "Default-ServiceBus-WestUS";
 
                 var namespaceName = TestUtilities.GenerateName(EventHubManagementHelper.NamespacePrefix);
 
                 var createNamespaceResponse = this.EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
-                    new NamespaceCreateOrUpdateParameters()
+                    new NamespaceResource()
                     {
                         Location = location,
                         Sku = new Sku
@@ -65,7 +67,7 @@ namespace EventHub.Tests.ScenarioTests
                 var eventhubName = TestUtilities.GenerateName(EventHubManagementHelper.EventHubPrefix);
 
                 var createEventhubResponse = this.EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName,
-                new EventHubCreateOrUpdateParameters()
+                new EventHubResource()
                 {
                     Location = location
                 }
@@ -82,7 +84,7 @@ namespace EventHub.Tests.ScenarioTests
 
                 // Create ConsumerGroup.
                 var consumergroupName = TestUtilities.GenerateName(EventHubManagementHelper.ConsumerGroupPrefix);
-                var createSubscriptionResponse = EventHubManagementClient.ConsumerGroups.CreateOrUpdate(resourceGroup, namespaceName, eventhubName, consumergroupName, new ConsumerGroupCreateOrUpdateParameters()
+                var createSubscriptionResponse = EventHubManagementClient.ConsumerGroups.CreateOrUpdate(resourceGroup, namespaceName, eventhubName, consumergroupName, new ConsumerGroupResource()
                 {
                     Location = location               
                 }
@@ -96,7 +98,7 @@ namespace EventHub.Tests.ScenarioTests
                 Assert.Equal(getConsumergroupGetResponse.Name, consumergroupName);
 
                 // Get all ConsumerGroup   
-                var getSubscriptionsListAllResponse = EventHubManagementClient.ConsumerGroups.ListAll(resourceGroup, namespaceName,eventhubName);
+                var getSubscriptionsListAllResponse = EventHubManagementClient.ConsumerGroups.ListByEventhub(resourceGroup, namespaceName,eventhubName);
                 Assert.NotNull(getSubscriptionsListAllResponse);              
                 Assert.True(getSubscriptionsListAllResponse.All(ns => ns.Id.Contains(resourceGroup)));
 

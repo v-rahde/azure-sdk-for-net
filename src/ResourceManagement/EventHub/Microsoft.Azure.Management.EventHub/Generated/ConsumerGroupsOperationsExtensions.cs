@@ -23,56 +23,58 @@ namespace Microsoft.Azure.Management.EventHub
     public static partial class ConsumerGroupsOperationsExtensions
     {
             /// <summary>
-            /// Creates/Updates a consumer group as a nested resource within a namespace.
+            /// Creates or updates an Event Hubs consumer group as a nested resource
+            /// within a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Resource Group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The Namespace Name within the Resource Group
             /// </param>
             /// <param name='eventHubName'>
-            /// The EventHub name.
+            /// The EventHub name
             /// </param>
             /// <param name='consumerGroupName'>
-            /// The Consumer Group name.
+            /// The consumerGroupName within the EventHub
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create a Consumer Group Resource.
+            /// Parameters supplied to create a consumer group resource.
             /// </param>
-            public static ConsumerGroupResource CreateOrUpdate(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, ConsumerGroupCreateOrUpdateParameters parameters)
+            public static ConsumerGroupResource CreateOrUpdate(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, ConsumerGroupResource parameters)
             {
                 return Task.Factory.StartNew(s => ((IConsumerGroupsOperations)s).CreateOrUpdateAsync(resourceGroupName, namespaceName, eventHubName, consumerGroupName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates/Updates a consumer group as a nested resource within a namespace.
+            /// Creates or updates an Event Hubs consumer group as a nested resource
+            /// within a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Resource Group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The Namespace Name within the Resource Group
             /// </param>
             /// <param name='eventHubName'>
-            /// The EventHub name.
+            /// The EventHub name
             /// </param>
             /// <param name='consumerGroupName'>
-            /// The Consumer Group name.
+            /// The consumerGroupName within the EventHub
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create a Consumer Group Resource.
+            /// Parameters supplied to create a consumer group resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<ConsumerGroupResource> CreateOrUpdateAsync(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, ConsumerGroupCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<ConsumerGroupResource> CreateOrUpdateAsync(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, ConsumerGroupResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, eventHubName, consumerGroupName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -81,22 +83,22 @@ namespace Microsoft.Azure.Management.EventHub
             }
 
             /// <summary>
-            /// Deletes an ConsumerGroup from the specified EventHub and resource group.
+            /// Deletes a consumer group from the specified Event Hub and resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Resource Group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The Namespace Name within the Resource Group
             /// </param>
             /// <param name='eventHubName'>
-            /// The EventHub name.
+            /// The EventHub name
             /// </param>
             /// <param name='consumerGroupName'>
-            /// The Consumer Group name.
+            /// The consumerGroupName within the EventHub
             /// </param>
             public static void Delete(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName)
             {
@@ -104,22 +106,22 @@ namespace Microsoft.Azure.Management.EventHub
             }
 
             /// <summary>
-            /// Deletes an ConsumerGroup from the specified EventHub and resource group.
+            /// Deletes a consumer group from the specified Event Hub and resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Resource Group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The Namespace Name within the Resource Group
             /// </param>
             /// <param name='eventHubName'>
-            /// The EventHub name.
+            /// The EventHub name
             /// </param>
             /// <param name='consumerGroupName'>
-            /// The Consumer Group name.
+            /// The consumerGroupName within the EventHub
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -130,22 +132,22 @@ namespace Microsoft.Azure.Management.EventHub
             }
 
             /// <summary>
-            /// Returns an Consumer Group description for the specified Consumer Group.
+            /// Gets a description for the specified consumer group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Resource Group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The Namespace Name within the Resource Group
             /// </param>
             /// <param name='eventHubName'>
-            /// The EventHub name.
+            /// The EventHub name
             /// </param>
             /// <param name='consumerGroupName'>
-            /// The Consumer Group name.
+            /// The consumerGroupName within the EventHub
             /// </param>
             public static ConsumerGroupResource Get(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName)
             {
@@ -153,22 +155,22 @@ namespace Microsoft.Azure.Management.EventHub
             }
 
             /// <summary>
-            /// Returns an Consumer Group description for the specified Consumer Group.
+            /// Gets a description for the specified consumer group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Resource Group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The Namespace Name within the Resource Group
             /// </param>
             /// <param name='eventHubName'>
-            /// The EventHub name.
+            /// The EventHub name
             /// </param>
             /// <param name='consumerGroupName'>
-            /// The Consumer Group name.
+            /// The consumerGroupName within the EventHub
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -182,56 +184,56 @@ namespace Microsoft.Azure.Management.EventHub
             }
 
             /// <summary>
-            /// Enumerates the consumer groups in a namespace. An empty feed is returned
-            /// if no consumer group exists in the namespace.
+            /// Gets all the consumer groups in a eventhub. An empty feed is returned if
+            /// no consumer group exists in the eventhub.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Resource Group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The Namespace Name within the Resource Group
             /// </param>
             /// <param name='eventHubName'>
-            /// The EventHub name.
+            /// The EventHub name
             /// </param>
-            public static IPage<ConsumerGroupResource> ListAll(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName)
+            public static IPage<ConsumerGroupResource> ListByEventhub(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName)
             {
-                return Task.Factory.StartNew(s => ((IConsumerGroupsOperations)s).ListAllAsync(resourceGroupName, namespaceName, eventHubName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IConsumerGroupsOperations)s).ListByEventhubAsync(resourceGroupName, namespaceName, eventHubName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Enumerates the consumer groups in a namespace. An empty feed is returned
-            /// if no consumer group exists in the namespace.
+            /// Gets all the consumer groups in a eventhub. An empty feed is returned if
+            /// no consumer group exists in the eventhub.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
             /// <param name='resourceGroupName'>
-            /// The name of the resource group.
+            /// The name of the Resource Group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name.
+            /// The Namespace Name within the Resource Group
             /// </param>
             /// <param name='eventHubName'>
-            /// The EventHub name.
+            /// The EventHub name
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ConsumerGroupResource>> ListAllAsync(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ConsumerGroupResource>> ListByEventhubAsync(this IConsumerGroupsOperations operations, string resourceGroupName, string namespaceName, string eventHubName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAllWithHttpMessagesAsync(resourceGroupName, namespaceName, eventHubName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByEventhubWithHttpMessagesAsync(resourceGroupName, namespaceName, eventHubName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Enumerates the consumer groups in a namespace. An empty feed is returned
-            /// if no consumer group exists in the namespace.
+            /// Gets all the consumer groups in a eventhub. An empty feed is returned if
+            /// no consumer group exists in the eventhub.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -239,14 +241,14 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<ConsumerGroupResource> ListAllNext(this IConsumerGroupsOperations operations, string nextPageLink)
+            public static IPage<ConsumerGroupResource> ListByEventhubNext(this IConsumerGroupsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IConsumerGroupsOperations)s).ListAllNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IConsumerGroupsOperations)s).ListByEventhubNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Enumerates the consumer groups in a namespace. An empty feed is returned
-            /// if no consumer group exists in the namespace.
+            /// Gets all the consumer groups in a eventhub. An empty feed is returned if
+            /// no consumer group exists in the eventhub.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -257,9 +259,9 @@ namespace Microsoft.Azure.Management.EventHub
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<ConsumerGroupResource>> ListAllNextAsync(this IConsumerGroupsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<ConsumerGroupResource>> ListByEventhubNextAsync(this IConsumerGroupsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByEventhubNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

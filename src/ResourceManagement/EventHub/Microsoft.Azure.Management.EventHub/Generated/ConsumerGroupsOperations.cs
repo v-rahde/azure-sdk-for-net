@@ -50,22 +50,23 @@ namespace Microsoft.Azure.Management.EventHub
         public EventHubManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Creates/Updates a consumer group as a nested resource within a namespace.
+        /// Creates or updates an Event Hubs consumer group as a nested resource
+        /// within a namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Resource Group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The Namespace Name within the Resource Group
         /// </param>
         /// <param name='eventHubName'>
-        /// The EventHub name.
+        /// The EventHub name
         /// </param>
         /// <param name='consumerGroupName'>
-        /// The Consumer Group name.
+        /// The consumerGroupName within the EventHub
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to create a Consumer Group Resource.
+        /// Parameters supplied to create a consumer group resource.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -76,23 +77,67 @@ namespace Microsoft.Azure.Management.EventHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<ConsumerGroupResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, ConsumerGroupCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<ConsumerGroupResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, string consumerGroupName, ConsumerGroupResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
             }
             if (eventHubName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "eventHubName");
             }
+            if (eventHubName != null)
+            {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
+                if (eventHubName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
+                }
+            }
             if (consumerGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "consumerGroupName");
+            }
+            if (consumerGroupName != null)
+            {
+                if (consumerGroupName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "consumerGroupName", 50);
+                }
+                if (consumerGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "consumerGroupName", 1);
+                }
             }
             if (parameters == null)
             {
@@ -268,19 +313,19 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Deletes an ConsumerGroup from the specified EventHub and resource group.
+        /// Deletes a consumer group from the specified Event Hub and resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Resource Group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The Namespace Name within the Resource Group
         /// </param>
         /// <param name='eventHubName'>
-        /// The EventHub name.
+        /// The EventHub name
         /// </param>
         /// <param name='consumerGroupName'>
-        /// The Consumer Group name.
+        /// The consumerGroupName within the EventHub
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -297,17 +342,61 @@ namespace Microsoft.Azure.Management.EventHub
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
             }
             if (eventHubName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "eventHubName");
             }
+            if (eventHubName != null)
+            {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
+                if (eventHubName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
+                }
+            }
             if (consumerGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "consumerGroupName");
+            }
+            if (consumerGroupName != null)
+            {
+                if (consumerGroupName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "consumerGroupName", 50);
+                }
+                if (consumerGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "consumerGroupName", 1);
+                }
             }
             if (this.Client.ApiVersion == null)
             {
@@ -437,19 +526,19 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Returns an Consumer Group description for the specified Consumer Group.
+        /// Gets a description for the specified consumer group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Resource Group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The Namespace Name within the Resource Group
         /// </param>
         /// <param name='eventHubName'>
-        /// The EventHub name.
+        /// The EventHub name
         /// </param>
         /// <param name='consumerGroupName'>
-        /// The Consumer Group name.
+        /// The consumerGroupName within the EventHub
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -466,17 +555,61 @@ namespace Microsoft.Azure.Management.EventHub
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
             }
             if (eventHubName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "eventHubName");
             }
+            if (eventHubName != null)
+            {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
+                if (eventHubName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
+                }
+            }
             if (consumerGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "consumerGroupName");
+            }
+            if (consumerGroupName != null)
+            {
+                if (consumerGroupName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "consumerGroupName", 50);
+                }
+                if (consumerGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "consumerGroupName", 1);
+                }
             }
             if (this.Client.ApiVersion == null)
             {
@@ -637,17 +770,17 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Enumerates the consumer groups in a namespace. An empty feed is returned
-        /// if no consumer group exists in the namespace.
+        /// Gets all the consumer groups in a eventhub. An empty feed is returned if
+        /// no consumer group exists in the eventhub.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Resource Group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The Namespace Name within the Resource Group
         /// </param>
         /// <param name='eventHubName'>
-        /// The EventHub name.
+        /// The EventHub name
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -658,19 +791,52 @@ namespace Microsoft.Azure.Management.EventHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ConsumerGroupResource>>> ListAllWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ConsumerGroupResource>>> ListByEventhubWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
             }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
+            }
             if (eventHubName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "eventHubName");
+            }
+            if (eventHubName != null)
+            {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
+                if (eventHubName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
+                }
             }
             if (this.Client.ApiVersion == null)
             {
@@ -691,7 +857,7 @@ namespace Microsoft.Azure.Management.EventHub
                 tracingParameters.Add("namespaceName", namespaceName);
                 tracingParameters.Add("eventHubName", eventHubName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListAll", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByEventhub", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -829,8 +995,8 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Enumerates the consumer groups in a namespace. An empty feed is returned
-        /// if no consumer group exists in the namespace.
+        /// Gets all the consumer groups in a eventhub. An empty feed is returned if
+        /// no consumer group exists in the eventhub.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -844,7 +1010,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<ConsumerGroupResource>>> ListAllNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<ConsumerGroupResource>>> ListByEventhubNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -859,7 +1025,7 @@ namespace Microsoft.Azure.Management.EventHub
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListAllNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByEventhubNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";

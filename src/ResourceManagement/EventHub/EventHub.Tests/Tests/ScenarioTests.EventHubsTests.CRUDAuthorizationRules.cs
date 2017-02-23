@@ -37,21 +37,21 @@ namespace EventHub.Tests.ScenarioTests
                 InitializeClients(context);
 
                 var location = EventHubManagementHelper.DefaultLocation;
-                
-                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
-                if (string.IsNullOrWhiteSpace(resourceGroup))
-                {
-                    resourceGroup = TestUtilities.GenerateName(EventHubManagementHelper.ResourceGroupPrefix);
-                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
-                }
 
-               // resourceGroup = "Default-ServiceBus-WestUS";
+                //var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                //if (string.IsNullOrWhiteSpace(resourceGroup))
+                //{
+                //    resourceGroup = TestUtilities.GenerateName(EventHubManagementHelper.ResourceGroupPrefix);
+                //    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                //}
+
+                var resourceGroup = "Default-ServiceBus-WestUS";
 
                 // Create a namespace
                 var namespaceName = TestUtilities.GenerateName(EventHubManagementHelper.NamespacePrefix);
 
                 var createNamespaceResponse = this.EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
-                    new NamespaceCreateOrUpdateParameters()
+                    new NamespaceResource()
                     {
                         Location = location,                        
                         Sku = new Sku
@@ -74,13 +74,12 @@ namespace EventHub.Tests.ScenarioTests
                 getNamespaceResponse = EventHubManagementClient.Namespaces.Get(resourceGroup, namespaceName);
                 Assert.NotNull(getNamespaceResponse);
                 Assert.Equal("Succeeded", getNamespaceResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
-                Assert.Equal(NamespaceState.Active , getNamespaceResponse.Status);
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
 
                 // Create Eventhub
                 var eventhubName = TestUtilities.GenerateName(EventHubManagementHelper.EventHubPrefix);                
                 var createEventhubResponse = this.EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName,
-                new EventHubCreateOrUpdateParameters()
+                new EventHubResource()
                 {
                     Location = location
                 });
@@ -97,9 +96,9 @@ namespace EventHub.Tests.ScenarioTests
                 // Create a EventHub AuthorizationRule
                 var authorizationRuleName = TestUtilities.GenerateName(EventHubManagementHelper.AuthorizationRulesPrefix);
                 string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", EventHubManagementHelper.GenerateRandomKey());
-                var createAutorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters()
+                var createAutorizationRuleParameter = new SharedAccessAuthorizationRuleResource()
                 {
-                    Name = authorizationRuleName,
+                    Location = location,
                     Rights = new List<AccessRights?>() { AccessRights.Listen, AccessRights.Send }
                 };
 
@@ -131,8 +130,9 @@ namespace EventHub.Tests.ScenarioTests
 
                 // Update Eventhub authorizationRule
                 string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", EventHubManagementHelper.GenerateRandomKey());
-                SharedAccessAuthorizationRuleCreateOrUpdateParameters updateEventhubAuthorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters();
+                SharedAccessAuthorizationRuleResource updateEventhubAuthorizationRuleParameter = new SharedAccessAuthorizationRuleResource();
                 updateEventhubAuthorizationRuleParameter.Rights = new List<AccessRights?>() { AccessRights.Listen };
+                updateEventhubAuthorizationRuleParameter.Location = location;
 
                 var updateEventhubAuthorizationRuleResponse = EventHubManagementClient.EventHubs.CreateOrUpdateAuthorizationRule(resourceGroup,
                     namespaceName,eventhubName, authorizationRuleName, updateEventhubAuthorizationRuleParameter);

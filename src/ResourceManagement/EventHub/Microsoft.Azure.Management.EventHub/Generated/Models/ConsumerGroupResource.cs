@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Description of Consumer Group Resource.
+    /// Description of the consumer group resource.
     /// </summary>
     [JsonTransformation]
     public partial class ConsumerGroupResource : Resource
@@ -43,19 +43,19 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// Exact time the message was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdAt")]
-        public DateTime? CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; private set; }
 
         /// <summary>
-        /// The path of the event hub.
+        /// The path of the Event Hub.
         /// </summary>
         [JsonProperty(PropertyName = "properties.eventHubPath")]
-        public string EventHubPath { get; set; }
+        public string EventHubPath { get; private set; }
 
         /// <summary>
-        /// The exact time the message has been updated.
+        /// The exact time the message was updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.updatedAt")]
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; private set; }
 
         /// <summary>
         /// The user metadata.

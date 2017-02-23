@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Parameters supplied to the Regenerate Auth Rule.
+    /// Parameters supplied to the Regenerate Authorization Rule operation.
     /// </summary>
     public partial class RegenerateKeysParameters
     {
@@ -35,7 +35,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
         }
 
         /// <summary>
-        /// Key that needs to be regenerated . Possible values include:
+        /// Key that needs to be regenerated. Possible values include:
         /// 'PrimaryKey', 'SecondaryKey'
         /// </summary>
         [JsonProperty(PropertyName = "Policykey")]

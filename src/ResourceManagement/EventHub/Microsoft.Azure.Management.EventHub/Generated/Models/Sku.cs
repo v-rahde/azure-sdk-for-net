@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Sku of the Namespace.
+    /// SKU of the namespace.
     /// </summary>
     public partial class Sku
     {
@@ -37,21 +37,20 @@ namespace Microsoft.Azure.Management.EventHub.Models
         }
 
         /// <summary>
-        /// Name of this Sku. Possible values include: 'Basic', 'Standard',
-        /// 'Premium'
+        /// Name of this SKU. Possible values include: 'Basic', 'Standard'
         /// </summary>
         [JsonProperty(PropertyName = "name")]
         public string Name { get; set; }
 
         /// <summary>
-        /// The tier of this particular SKU. Possible values include: 'Basic',
-        /// 'Standard', 'Premium'
+        /// The billing tier of this particular SKU. Possible values include:
+        /// 'Basic', 'Standard', 'Premium'
         /// </summary>
         [JsonProperty(PropertyName = "tier")]
         public string Tier { get; set; }
 
         /// <summary>
-        /// The eventhub throughput units
+        /// The Event Hubs throughput units.
         /// </summary>
         [JsonProperty(PropertyName = "capacity")]
         public int? Capacity { get; set; }

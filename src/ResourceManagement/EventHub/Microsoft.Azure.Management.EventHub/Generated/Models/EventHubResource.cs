@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Description of EventHub Resource.
+    /// Description of the Event Hub resource.
     /// </summary>
     [JsonTransformation]
     public partial class EventHubResource : Resource
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <summary>
         /// Initializes a new instance of the EventHubResource class.
         /// </summary>
-        public EventHubResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DateTime? createdAt = default(DateTime?), long? messageRetentionInDays = default(long?), long? partitionCount = default(long?), IList<int?> partitionIds = default(IList<int?>), EntityStatus? status = default(EntityStatus?), DateTime? updatedAt = default(DateTime?))
+        public EventHubResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DateTime? createdAt = default(DateTime?), long? messageRetentionInDays = default(long?), long? partitionCount = default(long?), IList<string> partitionIds = default(IList<string>), EntityStatus? status = default(EntityStatus?), DateTime? updatedAt = default(DateTime?))
             : base(location, id, name, type, tags)
         {
             CreatedAt = createdAt;
@@ -42,10 +42,10 @@ namespace Microsoft.Azure.Management.EventHub.Models
         }
 
         /// <summary>
-        /// Exact time the Event was created.
+        /// Exact time the Event Hub was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdAt")]
-        public DateTime? CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; private set; }
 
         /// <summary>
         /// Number of days to retain the events for this Event Hub.
@@ -54,7 +54,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
         public long? MessageRetentionInDays { get; set; }
 
         /// <summary>
-        /// Number of partitions created for EventHub.
+        /// Number of partitions created for the Event Hub.
         /// </summary>
         [JsonProperty(PropertyName = "properties.partitionCount")]
         public long? PartitionCount { get; set; }
@@ -63,10 +63,10 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// Current number of shards on the Event Hub.
         /// </summary>
         [JsonProperty(PropertyName = "properties.partitionIds")]
-        public IList<int?> PartitionIds { get; set; }
+        public IList<string> PartitionIds { get; private set; }
 
         /// <summary>
-        /// Enumerates the possible values for the status of the EventHub.
+        /// Enumerates the possible values for the status of the Event Hub.
         /// Possible values include: 'Active', 'Disabled', 'Restoring',
         /// 'SendDisabled', 'ReceiveDisabled', 'Creating', 'Deleting',
         /// 'Renaming', 'Unknown'
@@ -75,10 +75,10 @@ namespace Microsoft.Azure.Management.EventHub.Models
         public EntityStatus? Status { get; set; }
 
         /// <summary>
-        /// The exact time the message has been updated.
+        /// The exact time the message was updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.updatedAt")]
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; private set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

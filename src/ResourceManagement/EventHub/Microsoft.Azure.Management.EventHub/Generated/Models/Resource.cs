@@ -16,6 +16,9 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using Microsoft.Rest.Serialization;
     using Microsoft.Rest.Azure;
 
+    /// <summary>
+    /// The Resource definition.
+    /// </summary>
     public partial class Resource : IResource
     {
         /// <summary>

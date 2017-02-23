@@ -35,17 +35,19 @@ namespace EventHub.Tests.ScenarioTests
                 InitializeClients(context);
                 var location = EventHubManagementHelper.DefaultLocation;
 
-                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
-                if (string.IsNullOrWhiteSpace(resourceGroup))
-                {
-                    resourceGroup = TestUtilities.GenerateName(EventHubManagementHelper.ResourceGroupPrefix);
-                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
-                }
+                //var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                //if (string.IsNullOrWhiteSpace(resourceGroup))
+                //{
+                //    resourceGroup = TestUtilities.GenerateName(EventHubManagementHelper.ResourceGroupPrefix);
+                //    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                //}
+
+                var resourceGroup = "Default-ServiceBus-WestUS";
 
                 var namespaceName = TestUtilities.GenerateName(EventHubManagementHelper.NamespacePrefix);
 
                 var createNamespaceResponse = this.EventHubManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
-                    new NamespaceCreateOrUpdateParameters()
+                    new NamespaceResource()
                     {
                         Location = location,
                         Sku = new Sku
@@ -64,7 +66,7 @@ namespace EventHub.Tests.ScenarioTests
                 var eventhubName = TestUtilities.GenerateName(EventHubManagementHelper.EventHubPrefix);
 
                 var createEventHubResponse = this.EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName,
-                new EventHubCreateOrUpdateParameters()
+                new EventHubResource()
                 {
                     Location = location
                 });
@@ -79,15 +81,14 @@ namespace EventHub.Tests.ScenarioTests
 
 
                 // Get all Event Hubs for a given NameSpace
-                var getListEventHubResponse = EventHubManagementClient.EventHubs.ListAll(resourceGroup, namespaceName);
+                var getListEventHubResponse = EventHubManagementClient.EventHubs.ListByNamespace(resourceGroup, namespaceName);
                 Assert.NotNull(getListEventHubResponse);
                 Assert.True(getListEventHubResponse.Count<EventHubResource>() >= 1 );
 
                 // Update the EventHub
-                EventHubCreateOrUpdateParameters updateEventHubProperties = new EventHubCreateOrUpdateParameters()
+                EventHubResource updateEventHubProperties = new EventHubResource()
                 {
-                    Location = location,
-                    Name = eventhubName
+                    Location = location
                 };
 
                 var getUpdateEventhubPropertiesResponse = EventHubManagementClient.EventHubs.CreateOrUpdate(resourceGroup, namespaceName, eventhubName, updateEventHubProperties);

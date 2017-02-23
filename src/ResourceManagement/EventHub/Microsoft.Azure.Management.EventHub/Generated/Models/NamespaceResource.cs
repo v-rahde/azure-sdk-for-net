@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.EventHub.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Description of a Namespace resource.
+    /// Description of a namespace resource.
     /// </summary>
     [JsonTransformation]
     public partial class NamespaceResource : Resource
@@ -30,17 +30,14 @@ namespace Microsoft.Azure.Management.EventHub.Models
         /// <summary>
         /// Initializes a new instance of the NamespaceResource class.
         /// </summary>
-        public NamespaceResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string provisioningState = default(string), NamespaceState? status = default(NamespaceState?), DateTime? createdAt = default(DateTime?), DateTime? updatedAt = default(DateTime?), string serviceBusEndpoint = default(string), bool? createACSNamespace = default(bool?), bool? enabled = default(bool?))
+        public NamespaceResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), Sku sku = default(Sku), string provisioningState = default(string), DateTime? createdAt = default(DateTime?), DateTime? updatedAt = default(DateTime?), string serviceBusEndpoint = default(string))
             : base(location, id, name, type, tags)
         {
             Sku = sku;
             ProvisioningState = provisioningState;
-            Status = status;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             ServiceBusEndpoint = serviceBusEndpoint;
-            CreateACSNamespace = createACSNamespace;
-            Enabled = enabled;
         }
 
         /// <summary>
@@ -49,19 +46,10 @@ namespace Microsoft.Azure.Management.EventHub.Models
         public Sku Sku { get; set; }
 
         /// <summary>
-        /// Provisioning state of the Namespace.
+        /// Provisioning state of the namespace.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
         public string ProvisioningState { get; set; }
-
-        /// <summary>
-        /// State of the namespace. Possible values include: 'Unknown',
-        /// 'Creating', 'Created', 'Activating', 'Enabling', 'Active',
-        /// 'Disabling', 'Disabled', 'SoftDeleting', 'SoftDeleted',
-        /// 'Removing', 'Removed', 'Failed'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.status")]
-        public NamespaceState? Status { get; set; }
 
         /// <summary>
         /// The time the namespace was created.
@@ -76,22 +64,10 @@ namespace Microsoft.Azure.Management.EventHub.Models
         public DateTime? UpdatedAt { get; set; }
 
         /// <summary>
-        /// Endpoint you can use to perform ServiceBus operations.
+        /// Endpoint you can use to perform Service Bus operations.
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceBusEndpoint")]
         public string ServiceBusEndpoint { get; set; }
-
-        /// <summary>
-        /// Indicates whether to create ACS namespace.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.createACSNamespace")]
-        public bool? CreateACSNamespace { get; set; }
-
-        /// <summary>
-        /// Specifies whether this instance is enabled.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.enabled")]
-        public bool? Enabled { get; set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

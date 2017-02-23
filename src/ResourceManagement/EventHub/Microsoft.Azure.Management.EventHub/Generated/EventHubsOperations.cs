@@ -50,13 +50,13 @@ namespace Microsoft.Azure.Management.EventHub
         public EventHubManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Enumerates the Event Hubs in a namespace.
+        /// Gets all the Event Hubs in a namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Resource Group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The Namespace Name within the Resource Group
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -67,15 +67,37 @@ namespace Microsoft.Azure.Management.EventHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<EventHubResource>>> ListAllWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<EventHubResource>>> ListByNamespaceWithHttpMessagesAsync(string resourceGroupName, string namespaceName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
             }
             if (this.Client.ApiVersion == null)
             {
@@ -95,7 +117,7 @@ namespace Microsoft.Azure.Management.EventHub
                 tracingParameters.Add("resourceGroupName", resourceGroupName);
                 tracingParameters.Add("namespaceName", namespaceName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListAll", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByNamespace", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -232,19 +254,19 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Creates/Updates a new Event Hub as a nested resource within a namespace.
+        /// Creates or updates a new Event Hub as a nested resource within a namespace.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Resource Group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The Namespace Name within the Resource Group
         /// </param>
         /// <param name='eventHubName'>
-        /// The EventHub name.
+        /// The EventHub name
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to create a EventHub Resource.
+        /// Parameters supplied to create an Event Hub resource.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -255,19 +277,52 @@ namespace Microsoft.Azure.Management.EventHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<EventHubResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, EventHubCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<EventHubResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, EventHubResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
             }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
+            }
             if (eventHubName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "eventHubName");
+            }
+            if (eventHubName != null)
+            {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
+                if (eventHubName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
+                }
             }
             if (parameters == null)
             {
@@ -441,16 +496,16 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Deletes an Event hub from the specified namespace and resource group.
+        /// Deletes an Event Hub from the specified namespace and resource group.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Resource Group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The Namespace Name within the Resource Group
         /// </param>
         /// <param name='eventHubName'>
-        /// The EventHub name.
+        /// The EventHub name
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -467,13 +522,46 @@ namespace Microsoft.Azure.Management.EventHub
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
             }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
+            }
             if (eventHubName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "eventHubName");
+            }
+            if (eventHubName != null)
+            {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
+                if (eventHubName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
+                }
             }
             if (this.Client.ApiVersion == null)
             {
@@ -601,16 +689,16 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Returns an Event Hub description for the specified Event Hub.
+        /// Gets an Event Hubs description for the specified Event Hub.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Resource Group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The Namespace Name within the Resource Group
         /// </param>
         /// <param name='eventHubName'>
-        /// The EventHub name.
+        /// The EventHub name
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -627,13 +715,46 @@ namespace Microsoft.Azure.Management.EventHub
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
             }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
+            }
             if (eventHubName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "eventHubName");
+            }
+            if (eventHubName != null)
+            {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
+                if (eventHubName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
+                }
             }
             if (this.Client.ApiVersion == null)
             {
@@ -792,16 +913,16 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Authorization rules for a EventHub.
+        /// Gets the authorization rules for an Event Hub.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Resource Group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The NameSpace name
+        /// The Namespace Name within the Resource Group
         /// </param>
         /// <param name='eventHubName'>
-        /// The EventHub name.
+        /// The EventHub name
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -818,13 +939,46 @@ namespace Microsoft.Azure.Management.EventHub
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
             }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
+            }
             if (eventHubName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "eventHubName");
+            }
+            if (eventHubName != null)
+            {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
+                if (eventHubName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
+                }
             }
             if (this.Client.ApiVersion == null)
             {
@@ -983,19 +1137,19 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Creates an authorization rule for the specified Event Hub.
+        /// Creates or updates an authorization rule for the specified Event Hub.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Resource Group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The Namespace Name within the Resource Group
         /// </param>
         /// <param name='eventHubName'>
-        /// The Event Hub name.
+        /// The EventHub name
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// Aauthorization Rule Name.
+        /// Authorization rule name.
         /// </param>
         /// <param name='parameters'>
         /// The shared access authorization rule.
@@ -1009,23 +1163,67 @@ namespace Microsoft.Azure.Management.EventHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SharedAccessAuthorizationRuleResource>> CreateOrUpdateAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SharedAccessAuthorizationRuleResource>> CreateOrUpdateAuthorizationRuleWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string eventHubName, string authorizationRuleName, SharedAccessAuthorizationRuleResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
             }
             if (eventHubName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "eventHubName");
             }
+            if (eventHubName != null)
+            {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
+                if (eventHubName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
+                }
+            }
             if (authorizationRuleName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "authorizationRuleName");
+            }
+            if (authorizationRuleName != null)
+            {
+                if (authorizationRuleName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "authorizationRuleName", 50);
+                }
+                if (authorizationRuleName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "authorizationRuleName", 1);
+                }
             }
             if (parameters == null)
             {
@@ -1201,16 +1399,16 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Authorization rule for a EventHub by name.
+        /// Gets an authorization rule for an Event Hub by rule name.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Resource Group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name
+        /// The Namespace Name within the Resource Group
         /// </param>
         /// <param name='eventHubName'>
-        /// The Event Hub name.
+        /// The EventHub name
         /// </param>
         /// <param name='authorizationRuleName'>
         /// Authorization rule name.
@@ -1230,17 +1428,61 @@ namespace Microsoft.Azure.Management.EventHub
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
             }
             if (eventHubName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "eventHubName");
             }
+            if (eventHubName != null)
+            {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
+                if (eventHubName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
+                }
+            }
             if (authorizationRuleName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "authorizationRuleName");
+            }
+            if (authorizationRuleName != null)
+            {
+                if (authorizationRuleName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "authorizationRuleName", 50);
+                }
+                if (authorizationRuleName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "authorizationRuleName", 1);
+                }
             }
             if (this.Client.ApiVersion == null)
             {
@@ -1401,19 +1643,19 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Deletes a EventHub authorization rule
+        /// Deletes an Event Hubs authorization rule.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Resource Group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The Namespace Name within the Resource Group
         /// </param>
         /// <param name='eventHubName'>
-        /// The Eventhub name.
+        /// The EventHub name
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// Authorization Rule Name.
+        /// Authorization rule name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1430,17 +1672,61 @@ namespace Microsoft.Azure.Management.EventHub
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
             }
             if (eventHubName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "eventHubName");
             }
+            if (eventHubName != null)
+            {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
+                if (eventHubName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
+                }
+            }
             if (authorizationRuleName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "authorizationRuleName");
+            }
+            if (authorizationRuleName != null)
+            {
+                if (authorizationRuleName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "authorizationRuleName", 50);
+                }
+                if (authorizationRuleName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "authorizationRuleName", 1);
+                }
             }
             if (this.Client.ApiVersion == null)
             {
@@ -1570,19 +1856,19 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Returns the ACS and SAS connection strings for the Event Hub.
+        /// Gets the ACS and SAS connection strings for the Event Hub.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Resource Group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The Namespace Name within the Resource Group
         /// </param>
         /// <param name='eventHubName'>
-        /// The event hub name.
+        /// The EventHub name
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The connection string of the namespace for the specified authorizationRule.
+        /// Authorization rule name.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1599,17 +1885,61 @@ namespace Microsoft.Azure.Management.EventHub
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
             }
             if (eventHubName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "eventHubName");
             }
+            if (eventHubName != null)
+            {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
+                if (eventHubName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
+                }
+            }
             if (authorizationRuleName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "authorizationRuleName");
+            }
+            if (authorizationRuleName != null)
+            {
+                if (authorizationRuleName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "authorizationRuleName", 50);
+                }
+                if (authorizationRuleName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "authorizationRuleName", 1);
+                }
             }
             if (this.Client.ApiVersion == null)
             {
@@ -1773,19 +2103,19 @@ namespace Microsoft.Azure.Management.EventHub
         /// Regenerates the ACS and SAS connection strings for the Event Hub.
         /// </summary>
         /// <param name='resourceGroupName'>
-        /// The name of the resource group.
+        /// The name of the Resource Group.
         /// </param>
         /// <param name='namespaceName'>
-        /// The namespace name.
+        /// The Namespace Name within the Resource Group
         /// </param>
         /// <param name='eventHubName'>
-        /// The event hub name.
+        /// The EventHub name
         /// </param>
         /// <param name='authorizationRuleName'>
-        /// The connection string of the EventHub for the specified authorizationRule.
+        /// Authorization rule name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to regenerate Auth Rule.
+        /// Parameters supplied to regenerate the authorization rule.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -1802,17 +2132,61 @@ namespace Microsoft.Azure.Management.EventHub
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "resourceGroupName");
             }
+            if (resourceGroupName != null)
+            {
+                if (resourceGroupName.Length > 90)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "resourceGroupName", 90);
+                }
+                if (resourceGroupName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "resourceGroupName", 1);
+                }
+            }
             if (namespaceName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "namespaceName");
+            }
+            if (namespaceName != null)
+            {
+                if (namespaceName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "namespaceName", 50);
+                }
+                if (namespaceName.Length < 6)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "namespaceName", 6);
+                }
             }
             if (eventHubName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "eventHubName");
             }
+            if (eventHubName != null)
+            {
+                if (eventHubName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "eventHubName", 50);
+                }
+                if (eventHubName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "eventHubName", 1);
+                }
+            }
             if (authorizationRuleName == null)
             {
                 throw new ValidationException(ValidationRules.CannotBeNull, "authorizationRuleName");
+            }
+            if (authorizationRuleName != null)
+            {
+                if (authorizationRuleName.Length > 50)
+                {
+                    throw new ValidationException(ValidationRules.MaxLength, "authorizationRuleName", 50);
+                }
+                if (authorizationRuleName.Length < 1)
+                {
+                    throw new ValidationException(ValidationRules.MinLength, "authorizationRuleName", 1);
+                }
             }
             if (parameters == null)
             {
@@ -1984,7 +2358,7 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Enumerates the Event Hubs in a namespace.
+        /// Gets all the Event Hubs in a namespace.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -1998,7 +2372,7 @@ namespace Microsoft.Azure.Management.EventHub
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<EventHubResource>>> ListAllNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<EventHubResource>>> ListByNamespaceNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -2013,7 +2387,7 @@ namespace Microsoft.Azure.Management.EventHub
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListAllNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByNamespaceNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
@@ -2143,7 +2517,7 @@ namespace Microsoft.Azure.Management.EventHub
         }
 
         /// <summary>
-        /// Authorization rules for a EventHub.
+        /// Gets the authorization rules for an Event Hub.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
