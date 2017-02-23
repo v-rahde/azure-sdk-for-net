@@ -35,17 +35,19 @@ namespace ServiceBus.Tests.ScenarioTests
                 InitializeClients(context);
                 var location = ServiceBusManagementHelper.DefaultLocation;
 
-                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
-                if (string.IsNullOrWhiteSpace(resourceGroup))
-                {
-                    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
-                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
-                }
+                //var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                //if (string.IsNullOrWhiteSpace(resourceGroup))
+                //{
+                //    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
+                //    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                //}
+
+               var resourceGroup = "Default-ServiceBus-WestUS";
 
                 var namespaceName = TestUtilities.GenerateName(ServiceBusManagementHelper.NamespacePrefix);
 
                 var createNamespaceResponse = this.ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
-                    new NamespaceCreateOrUpdateParameters()
+                    new NamespaceResource()
                     {
                         Location = location,
                         Sku = new Sku
@@ -64,7 +66,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 var topicName = TestUtilities.GenerateName(ServiceBusManagementHelper.TopicPrefix);
 
                 var createTopicResponse = this.ServiceBusManagementClient.Topics.CreateOrUpdate(resourceGroup, namespaceName, topicName,
-                new TopicCreateOrUpdateParameters()
+                new TopicResource()
                 {
                     Location = location                    
                 });
@@ -79,7 +81,7 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 // Create Subscription.
                 var subscriptionName = TestUtilities.GenerateName(ServiceBusManagementHelper.SubscritpitonPrefix);
-                var createSubscriptionResponse = ServiceBusManagementClient.Subscriptions.CreateOrUpdate(resourceGroup, namespaceName, topicName, subscriptionName, new SubscriptionCreateOrUpdateParameters()
+                var createSubscriptionResponse = ServiceBusManagementClient.Subscriptions.CreateOrUpdate(resourceGroup, namespaceName, topicName, subscriptionName, new SubscriptionResource()
                 {
                     Location = location               
                 });
@@ -93,13 +95,13 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.Equal(subscriptionGetResponse.Name, subscriptionName);
 
                 // Get all Subscriptions  
-                var getSubscriptionsListAllResponse = ServiceBusManagementClient.Subscriptions.ListAll(resourceGroup, namespaceName,topicName);
+                var getSubscriptionsListAllResponse = ServiceBusManagementClient.Subscriptions.ListByTopic(resourceGroup, namespaceName,topicName);
                 Assert.NotNull(getSubscriptionsListAllResponse);
                 Assert.True(getSubscriptionsListAllResponse.Count() == 1);                
                 Assert.True(getSubscriptionsListAllResponse.All(ns => ns.Id.Contains(resourceGroup)));
 
                 // Update Subscription. 
-                var updateSubscriptionParameter = new SubscriptionCreateOrUpdateParameters()
+                var updateSubscriptionParameter = new SubscriptionResource()
                 {
                     Location = location,
                     EnableBatchedOperations = true

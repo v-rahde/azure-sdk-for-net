@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ServiceBus
     public static partial class SubscriptionsOperationsExtensions
     {
             /// <summary>
-            /// Lsit all the subscriptions under a specified topic
+            /// Lsit all the subscriptions under a specified topic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -37,13 +37,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='topicName'>
             /// The topic name.
             /// </param>
-            public static IPage<SubscriptionResource> ListAll(this ISubscriptionsOperations operations, string resourceGroupName, string namespaceName, string topicName)
+            public static IPage<SubscriptionResource> ListByTopic(this ISubscriptionsOperations operations, string resourceGroupName, string namespaceName, string topicName)
             {
-                return Task.Factory.StartNew(s => ((ISubscriptionsOperations)s).ListAllAsync(resourceGroupName, namespaceName, topicName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISubscriptionsOperations)s).ListByTopicAsync(resourceGroupName, namespaceName, topicName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lsit all the subscriptions under a specified topic
+            /// Lsit all the subscriptions under a specified topic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -60,16 +60,16 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SubscriptionResource>> ListAllAsync(this ISubscriptionsOperations operations, string resourceGroupName, string namespaceName, string topicName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SubscriptionResource>> ListByTopicAsync(this ISubscriptionsOperations operations, string resourceGroupName, string namespaceName, string topicName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAllWithHttpMessagesAsync(resourceGroupName, namespaceName, topicName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByTopicWithHttpMessagesAsync(resourceGroupName, namespaceName, topicName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Creates a topic subscription
+            /// Creates a topic subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -81,21 +81,21 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name.
             /// </param>
             /// <param name='topicName'>
-            /// The topicName name.
+            /// The topic name.
             /// </param>
             /// <param name='subscriptionName'>
-            /// The subscriptionName name.
+            /// The subscription name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create a subscription Resource.
+            /// Parameters supplied to create a subscription resource.
             /// </param>
-            public static SubscriptionResource CreateOrUpdate(this ISubscriptionsOperations operations, string resourceGroupName, string namespaceName, string topicName, string subscriptionName, SubscriptionCreateOrUpdateParameters parameters)
+            public static SubscriptionResource CreateOrUpdate(this ISubscriptionsOperations operations, string resourceGroupName, string namespaceName, string topicName, string subscriptionName, SubscriptionResource parameters)
             {
                 return Task.Factory.StartNew(s => ((ISubscriptionsOperations)s).CreateOrUpdateAsync(resourceGroupName, namespaceName, topicName, subscriptionName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates a topic subscription
+            /// Creates a topic subscription.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -107,18 +107,18 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name.
             /// </param>
             /// <param name='topicName'>
-            /// The topicName name.
+            /// The topic name.
             /// </param>
             /// <param name='subscriptionName'>
-            /// The subscriptionName name.
+            /// The subscription name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create a subscription Resource.
+            /// Parameters supplied to create a subscription resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SubscriptionResource> CreateOrUpdateAsync(this ISubscriptionsOperations operations, string resourceGroupName, string namespaceName, string topicName, string subscriptionName, SubscriptionCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SubscriptionResource> CreateOrUpdateAsync(this ISubscriptionsOperations operations, string resourceGroupName, string namespaceName, string topicName, string subscriptionName, SubscriptionResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, topicName, subscriptionName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -228,7 +228,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Lsit all the subscriptions under a specified topic
+            /// Lsit all the subscriptions under a specified topic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -236,13 +236,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<SubscriptionResource> ListAllNext(this ISubscriptionsOperations operations, string nextPageLink)
+            public static IPage<SubscriptionResource> ListByTopicNext(this ISubscriptionsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ISubscriptionsOperations)s).ListAllNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ISubscriptionsOperations)s).ListByTopicNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lsit all the subscriptions under a specified topic
+            /// Lsit all the subscriptions under a specified topic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -253,9 +253,9 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<SubscriptionResource>> ListAllNextAsync(this ISubscriptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<SubscriptionResource>> ListByTopicNextAsync(this ISubscriptionsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByTopicNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }

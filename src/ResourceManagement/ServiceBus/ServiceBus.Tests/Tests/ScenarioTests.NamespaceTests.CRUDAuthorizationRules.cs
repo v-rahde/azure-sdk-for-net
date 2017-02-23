@@ -37,17 +37,19 @@ namespace ServiceBus.Tests.ScenarioTests
                 InitializeClients(context);
 
                 var location = ServiceBusManagementHelper.DefaultLocation;
-                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
-                if (string.IsNullOrWhiteSpace(resourceGroup))
-                {
-                    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
-                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
-                }
+                //var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                //if (string.IsNullOrWhiteSpace(resourceGroup))
+                //{
+                //    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
+                //    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                //}
+
+                var resourceGroup = "Default-ServiceBus-WestUS";
 
                 // Create a namespace
                 var namespaceName = TestUtilities.GenerateName(ServiceBusManagementHelper.NamespacePrefix);
                 var createNamespaceResponse = ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
-                    new NamespaceCreateOrUpdateParameters()
+                    new NamespaceResource()
                     {
                         Location = location,
                     });
@@ -65,15 +67,14 @@ namespace ServiceBus.Tests.ScenarioTests
                 getNamespaceResponse = ServiceBusManagementClient.Namespaces.Get(resourceGroup, namespaceName);
                 Assert.NotNull(getNamespaceResponse);
                 Assert.Equal("Succeeded", getNamespaceResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
-                Assert.Equal(NamespaceState.Active , getNamespaceResponse.Status);
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
 
                 // Create a namespace AuthorizationRule
                 var authorizationRuleName = TestUtilities.GenerateName(ServiceBusManagementHelper.AuthorizationRulesPrefix);
                 string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
-                var createAutorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters()
+                var createAutorizationRuleParameter = new SharedAccessAuthorizationRuleResource()
                 {
-                    Name = authorizationRuleName,
+                    Location = location,
                     Rights = new List<AccessRights?>() { AccessRights.Listen, AccessRights.Send }
                 };
 
@@ -114,8 +115,9 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 // Update namespace authorizationRule
                 string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
-                SharedAccessAuthorizationRuleCreateOrUpdateParameters updateNamespaceAuthorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters();
+                SharedAccessAuthorizationRuleResource updateNamespaceAuthorizationRuleParameter = new SharedAccessAuthorizationRuleResource();
                 updateNamespaceAuthorizationRuleParameter.Rights = new List<AccessRights?>() { AccessRights.Listen };
+                updateNamespaceAuthorizationRuleParameter.Location = location;
 
                 var updateNamespaceAuthorizationRuleResponse = ServiceBusManagementClient.Namespaces.CreateOrUpdateAuthorizationRule(resourceGroup,
                     namespaceName, authorizationRuleName, updateNamespaceAuthorizationRuleParameter);

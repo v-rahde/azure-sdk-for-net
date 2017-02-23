@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ServiceBus
     public static partial class QueuesOperationsExtensions
     {
             /// <summary>
-            /// Lists the queues within the namespace.
+            /// Gets the queues within a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -34,13 +34,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='namespaceName'>
             /// The namespace name.
             /// </param>
-            public static IPage<QueueResource> ListAll(this IQueuesOperations operations, string resourceGroupName, string namespaceName)
+            public static IPage<QueueResource> ListByNamspace(this IQueuesOperations operations, string resourceGroupName, string namespaceName)
             {
-                return Task.Factory.StartNew(s => ((IQueuesOperations)s).ListAllAsync(resourceGroupName, namespaceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IQueuesOperations)s).ListByNamspaceAsync(resourceGroupName, namespaceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists the queues within the namespace.
+            /// Gets the queues within a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -54,16 +54,16 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<QueueResource>> ListAllAsync(this IQueuesOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<QueueResource>> ListByNamspaceAsync(this IQueuesOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAllWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByNamspaceWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Creates/Updates a service Queue. This operation is idempotent.
+            /// Creates or updates a Service Bus queue. This operation is idempotent.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -78,15 +78,15 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create a Queue Resource.
+            /// Parameters supplied to create or update a queue resource.
             /// </param>
-            public static QueueResource CreateOrUpdate(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, QueueCreateOrUpdateParameters parameters)
+            public static QueueResource CreateOrUpdate(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, QueueResource parameters)
             {
                 return Task.Factory.StartNew(s => ((IQueuesOperations)s).CreateOrUpdateAsync(resourceGroupName, namespaceName, queueName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates/Updates a service Queue. This operation is idempotent.
+            /// Creates or updates a Service Bus queue. This operation is idempotent.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -101,12 +101,12 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create a Queue Resource.
+            /// Parameters supplied to create or update a queue resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<QueueResource> CreateOrUpdateAsync(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, QueueCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<QueueResource> CreateOrUpdateAsync(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, QueueResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, queueName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -115,7 +115,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Deletes a queue from the specified namespace in resource group.
+            /// Deletes a queue from the specified namespace in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -127,7 +127,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name.
             /// </param>
             /// <param name='queueName'>
-            /// The queue name.
+            /// The name of the queue to be deleted.
             /// </param>
             public static void Delete(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName)
             {
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Deletes a queue from the specified namespace in resource group.
+            /// Deletes a queue from the specified namespace in a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -147,7 +147,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name.
             /// </param>
             /// <param name='queueName'>
-            /// The queue name.
+            /// The name of the queue to be deleted.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Returns the description for the specified queue.
+            /// Returns a description for the specified queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Returns the description for the specified queue.
+            /// Returns a description for the specified queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Returns all Queue authorizationRules.
+            /// Gets all authorization rules for a queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Returns all Queue authorizationRules.
+            /// Gets all authorization rules for a queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Creates an authorization rule for a queue
+            /// Creates an authorization rule for a queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -265,18 +265,18 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Aauthorization Rule Name.
+            /// Authorization rule name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.
             /// </param>
-            public static SharedAccessAuthorizationRuleResource CreateOrUpdateAuthorizationRule(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters)
+            public static SharedAccessAuthorizationRuleResource CreateOrUpdateAuthorizationRule(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName, SharedAccessAuthorizationRuleResource parameters)
             {
                 return Task.Factory.StartNew(s => ((IQueuesOperations)s).CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, queueName, authorizationRuleName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates an authorization rule for a queue
+            /// Creates an authorization rule for a queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -291,7 +291,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Aauthorization Rule Name.
+            /// Authorization rule name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.
@@ -299,7 +299,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SharedAccessAuthorizationRuleResource> CreateOrUpdateAuthorizationRuleAsync(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SharedAccessAuthorizationRuleResource> CreateOrUpdateAuthorizationRuleAsync(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName, SharedAccessAuthorizationRuleResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, queueName, authorizationRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -308,7 +308,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Deletes a queue authorization rule
+            /// Deletes a queue authorization rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -323,7 +323,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Authorization Rule Name.
+            /// Authorization rule name.
             /// </param>
             public static void DeleteAuthorizationRule(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName)
             {
@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Deletes a queue authorization rule
+            /// Deletes a queue authorization rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -346,7 +346,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Authorization Rule Name.
+            /// Authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -357,7 +357,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Queue authorizationRule for a queue by name.
+            /// Gets an authorization rule for a queue by rule name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -366,7 +366,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             /// <param name='queueName'>
             /// The queue name.
@@ -380,7 +380,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Queue authorizationRule for a queue by name.
+            /// Gets an authorization rule for a queue by rule name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -389,7 +389,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             /// <param name='queueName'>
             /// The queue name.
@@ -409,7 +409,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Primary and Secondary ConnectionStrings to the queue.
+            /// Primary and secondary connection strings to the queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -424,7 +424,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
+            /// The authorization rule name.
             /// </param>
             public static ResourceListKeys ListKeys(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName)
             {
@@ -432,7 +432,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Primary and Secondary ConnectionStrings to the queue.
+            /// Primary and secondary connection strings to the queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -447,7 +447,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -461,7 +461,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Regenerates the Primary or Secondary ConnectionStrings to the Queue
+            /// Regenerates the primary or secondary connection strings to the queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -476,10 +476,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationRule name
+            /// The authorization rule name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to regenerate Auth Rule.
+            /// Parameters supplied to regenerate the authorization rule.
             /// </param>
             public static ResourceListKeys RegenerateKeys(this IQueuesOperations operations, string resourceGroupName, string namespaceName, string queueName, string authorizationRuleName, RegenerateKeysParameters parameters)
             {
@@ -487,7 +487,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Regenerates the Primary or Secondary ConnectionStrings to the Queue
+            /// Regenerates the primary or secondary connection strings to the queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -502,10 +502,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The queue name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationRule name
+            /// The authorization rule name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to regenerate Auth Rule.
+            /// Parameters supplied to regenerate the authorization rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -519,7 +519,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Lists the queues within the namespace.
+            /// Gets the queues within a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -527,13 +527,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<QueueResource> ListAllNext(this IQueuesOperations operations, string nextPageLink)
+            public static IPage<QueueResource> ListByNamspaceNext(this IQueuesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((IQueuesOperations)s).ListAllNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((IQueuesOperations)s).ListByNamspaceNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists the queues within the namespace.
+            /// Gets the queues within a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -544,16 +544,16 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<QueueResource>> ListAllNextAsync(this IQueuesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<QueueResource>> ListByNamspaceNextAsync(this IQueuesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByNamspaceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Returns all Queue authorizationRules.
+            /// Gets all authorization rules for a queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -567,7 +567,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Returns all Queue authorizationRules.
+            /// Gets all authorization rules for a queue.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

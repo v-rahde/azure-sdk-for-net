@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Parameters supplied to the CreateOrUpdate Namespace operation.
+    /// Parameters supplied to the Create Or Update Namespace operation.
     /// </summary>
     [JsonTransformation]
     public partial class NamespaceCreateOrUpdateParameters
@@ -32,18 +32,15 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Initializes a new instance of the
         /// NamespaceCreateOrUpdateParameters class.
         /// </summary>
-        public NamespaceCreateOrUpdateParameters(string location, Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), NamespaceState? status = default(NamespaceState?), DateTime? createdAt = default(DateTime?), DateTime? updatedAt = default(DateTime?), string serviceBusEndpoint = default(string), bool? createACSNamespace = default(bool?), bool? enabled = default(bool?))
+        public NamespaceCreateOrUpdateParameters(string location, Sku sku = default(Sku), IDictionary<string, string> tags = default(IDictionary<string, string>), string provisioningState = default(string), DateTime? createdAt = default(DateTime?), DateTime? updatedAt = default(DateTime?), string serviceBusEndpoint = default(string))
         {
             Location = location;
             Sku = sku;
             Tags = tags;
             ProvisioningState = provisioningState;
-            Status = status;
             CreatedAt = createdAt;
             UpdatedAt = updatedAt;
             ServiceBusEndpoint = serviceBusEndpoint;
-            CreateACSNamespace = createACSNamespace;
-            Enabled = enabled;
         }
 
         /// <summary>
@@ -64,49 +61,28 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public IDictionary<string, string> Tags { get; set; }
 
         /// <summary>
-        /// Provisioning state of the Namespace.
+        /// Provisioning state of the namespace.
         /// </summary>
         [JsonProperty(PropertyName = "properties.provisioningState")]
-        public string ProvisioningState { get; set; }
-
-        /// <summary>
-        /// State of the namespace. Possible values include: 'Unknown',
-        /// 'Creating', 'Created', 'Activating', 'Enabling', 'Active',
-        /// 'Disabling', 'Disabled', 'SoftDeleting', 'SoftDeleted',
-        /// 'Removing', 'Removed', 'Failed'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.status")]
-        public NamespaceState? Status { get; set; }
+        public string ProvisioningState { get; private set; }
 
         /// <summary>
         /// The time the namespace was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdAt")]
-        public DateTime? CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; private set; }
 
         /// <summary>
         /// The time the namespace was updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.updatedAt")]
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; private set; }
 
         /// <summary>
-        /// Endpoint you can use to perform ServiceBus operations.
+        /// Endpoint you can use to perform Service Bus operations.
         /// </summary>
         [JsonProperty(PropertyName = "properties.serviceBusEndpoint")]
-        public string ServiceBusEndpoint { get; set; }
-
-        /// <summary>
-        /// Indicates whether to create ACS namespace.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.createACSNamespace")]
-        public bool? CreateACSNamespace { get; set; }
-
-        /// <summary>
-        /// Specifies whether this instance is enabled.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.enabled")]
-        public bool? Enabled { get; set; }
+        public string ServiceBusEndpoint { get; private set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

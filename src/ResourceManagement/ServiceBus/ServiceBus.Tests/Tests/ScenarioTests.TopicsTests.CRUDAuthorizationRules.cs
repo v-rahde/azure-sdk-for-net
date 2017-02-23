@@ -38,18 +38,20 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 var location = ServiceBusManagementHelper.DefaultLocation;
 
-                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
-                if (string.IsNullOrWhiteSpace(resourceGroup))
-                {
-                    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
-                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
-                }
+                //var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                //if (string.IsNullOrWhiteSpace(resourceGroup))
+                //{
+                //    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
+                //    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                //}
+
+               var resourceGroup = "Default-ServiceBus-WestUS";
 
                 // Create a namespace
                 var namespaceName = TestUtilities.GenerateName(ServiceBusManagementHelper.NamespacePrefix);
 
                 var createNamespaceResponse = this.ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
-                    new NamespaceCreateOrUpdateParameters()
+                    new NamespaceResource()
                     {
                         Location = location,
                         Sku = new Sku
@@ -72,14 +74,13 @@ namespace ServiceBus.Tests.ScenarioTests
                 getNamespaceResponse = ServiceBusManagementClient.Namespaces.Get(resourceGroup, namespaceName);
                 Assert.NotNull(getNamespaceResponse);
                 Assert.Equal("Succeeded", getNamespaceResponse.ProvisioningState, StringComparer.CurrentCultureIgnoreCase);
-                Assert.Equal(NamespaceState.Active , getNamespaceResponse.Status);
                 Assert.Equal(location, getNamespaceResponse.Location, StringComparer.CurrentCultureIgnoreCase);
 
                 // Create Topic
                 var topicName = TestUtilities.GenerateName(ServiceBusManagementHelper.TopicPrefix);
                 
                 var createTopicResponse = this.ServiceBusManagementClient.Topics.CreateOrUpdate(resourceGroup, namespaceName, topicName,
-                new TopicCreateOrUpdateParameters()
+                new TopicResource()
                 {
                     Location = location
                 });
@@ -95,9 +96,9 @@ namespace ServiceBus.Tests.ScenarioTests
                 // Create a topic AuthorizationRule
                 var authorizationRuleName = TestUtilities.GenerateName(ServiceBusManagementHelper.AuthorizationRulesPrefix);
                 string createPrimaryKey = HttpMockServer.GetVariable("CreatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
-                var createAutorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters()
+                var createAutorizationRuleParameter = new SharedAccessAuthorizationRuleResource()
                 {
-                    Name = authorizationRuleName,
+                    Location = location,
                     Rights = new List<AccessRights?>() { AccessRights.Listen, AccessRights.Send }
                 };
 
@@ -128,8 +129,9 @@ namespace ServiceBus.Tests.ScenarioTests
 
                 // Update topics authorizationRule
                 string updatePrimaryKey = HttpMockServer.GetVariable("UpdatePrimaryKey", ServiceBusManagementHelper.GenerateRandomKey());
-                SharedAccessAuthorizationRuleCreateOrUpdateParameters updateTopicsAuthorizationRuleParameter = new SharedAccessAuthorizationRuleCreateOrUpdateParameters();
+                SharedAccessAuthorizationRuleResource updateTopicsAuthorizationRuleParameter = new SharedAccessAuthorizationRuleResource();
                 updateTopicsAuthorizationRuleParameter.Rights = new List<AccessRights?>() { AccessRights.Listen };
+                updateTopicsAuthorizationRuleParameter.Location = location;
 
                 var updateTopicAuthorizationRuleResponse = ServiceBusManagementClient.Topics.CreateOrUpdateAuthorizationRule(resourceGroup,
                     namespaceName,topicName, authorizationRuleName, updateTopicsAuthorizationRuleParameter);

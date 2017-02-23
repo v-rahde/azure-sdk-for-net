@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Description of topic Resource.
+    /// Description of topic resource.
     /// </summary>
     [JsonTransformation]
     public partial class TopicResource : Resource
@@ -30,12 +30,11 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the TopicResource class.
         /// </summary>
-        public TopicResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DateTime? accessedAt = default(DateTime?), string autoDeleteOnIdle = default(string), EntityAvailabilityStatus? entityAvailabilityStatus = default(EntityAvailabilityStatus?), DateTime? createdAt = default(DateTime?), MessageCountDetails countDetails = default(MessageCountDetails), string defaultMessageTimeToLive = default(string), string duplicateDetectionHistoryTimeWindow = default(string), bool? enableBatchedOperations = default(bool?), bool? enableExpress = default(bool?), bool? enablePartitioning = default(bool?), bool? enableSubscriptionPartitioning = default(bool?), bool? filteringMessagesBeforePublishing = default(bool?), bool? isAnonymousAccessible = default(bool?), bool? isExpress = default(bool?), long? maxSizeInMegabytes = default(long?), bool? requiresDuplicateDetection = default(bool?), long? sizeInBytes = default(long?), EntityStatus? status = default(EntityStatus?), int? subscriptionCount = default(int?), bool? supportOrdering = default(bool?), DateTime? updatedAt = default(DateTime?))
+        public TopicResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DateTime? accessedAt = default(DateTime?), string autoDeleteOnIdle = default(string), DateTime? createdAt = default(DateTime?), MessageCountDetails countDetails = default(MessageCountDetails), string defaultMessageTimeToLive = default(string), string duplicateDetectionHistoryTimeWindow = default(string), bool? enableBatchedOperations = default(bool?), bool? enableExpress = default(bool?), bool? enablePartitioning = default(bool?), long? maxSizeInMegabytes = default(long?), bool? requiresDuplicateDetection = default(bool?), long? sizeInBytes = default(long?), EntityStatus? status = default(EntityStatus?), int? subscriptionCount = default(int?), bool? supportOrdering = default(bool?), DateTime? updatedAt = default(DateTime?))
             : base(location, id, name, type, tags)
         {
             AccessedAt = accessedAt;
             AutoDeleteOnIdle = autoDeleteOnIdle;
-            EntityAvailabilityStatus = entityAvailabilityStatus;
             CreatedAt = createdAt;
             CountDetails = countDetails;
             DefaultMessageTimeToLive = defaultMessageTimeToLive;
@@ -43,10 +42,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
             EnableBatchedOperations = enableBatchedOperations;
             EnableExpress = enableExpress;
             EnablePartitioning = enablePartitioning;
-            EnableSubscriptionPartitioning = enableSubscriptionPartitioning;
-            FilteringMessagesBeforePublishing = filteringMessagesBeforePublishing;
-            IsAnonymousAccessible = isAnonymousAccessible;
-            IsExpress = isExpress;
             MaxSizeInMegabytes = maxSizeInMegabytes;
             RequiresDuplicateDetection = requiresDuplicateDetection;
             SizeInBytes = sizeInBytes;
@@ -57,11 +52,11 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         }
 
         /// <summary>
-        /// Last time the message was sent or a request was received for this
-        /// topic.
+        /// Last time the message was sent, or a request was received, for
+        /// this topic.
         /// </summary>
         [JsonProperty(PropertyName = "properties.accessedAt")]
-        public DateTime? AccessedAt { get; set; }
+        public DateTime? AccessedAt { get; private set; }
 
         /// <summary>
         /// TimeSpan idle interval after which the topic is automatically
@@ -71,22 +66,15 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public string AutoDeleteOnIdle { get; set; }
 
         /// <summary>
-        /// Entity availability status for the topic. Possible values include:
-        /// 'Available', 'Limited', 'Renaming', 'Restoring', 'Unknown'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.entityAvailabilityStatus ")]
-        public EntityAvailabilityStatus? EntityAvailabilityStatus { get; set; }
-
-        /// <summary>
         /// Exact time the message was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdAt")]
-        public DateTime? CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; private set; }
 
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties.countDetails")]
-        public MessageCountDetails CountDetails { get; set; }
+        public MessageCountDetails CountDetails { get; private set; }
 
         /// <summary>
         /// Default message time to live value. This is the duration after
@@ -99,14 +87,14 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
 
         /// <summary>
         /// TimeSpan structure that defines the duration of the duplicate
-        /// detection history. The default value is 10 minutes..
+        /// detection history. The default value is 10 minutes.
         /// </summary>
-        [JsonProperty(PropertyName = "properties.duplicateDetectionHistoryTimeWindow ")]
+        [JsonProperty(PropertyName = "properties.duplicateDetectionHistoryTimeWindow")]
         public string DuplicateDetectionHistoryTimeWindow { get; set; }
 
         /// <summary>
         /// Value that indicates whether server-side batched operations are
-        /// enabled..
+        /// enabled.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableBatchedOperations")]
         public bool? EnableBatchedOperations { get; set; }
@@ -127,30 +115,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public bool? EnablePartitioning { get; set; }
 
         /// <summary>
-        /// Value that indicates whether partitioning is enabled or disabled..
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.enableSubscriptionPartitioning")]
-        public bool? EnableSubscriptionPartitioning { get; set; }
-
-        /// <summary>
-        /// Whether messages should be filtered before publishing.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.filteringMessagesBeforePublishing")]
-        public bool? FilteringMessagesBeforePublishing { get; set; }
-
-        /// <summary>
-        /// Value that indicates whether the message is anonymous accessible.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.isAnonymousAccessible")]
-        public bool? IsAnonymousAccessible { get; set; }
-
-        /// <summary>
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.isExpress")]
-        public bool? IsExpress { get; set; }
-
-        /// <summary>
-        /// Maximum size of the topic in megabytes, which is the size of
+        /// Maximum size of the topic in megabytes, which is the size of the
         /// memory allocated for the topic.
         /// </summary>
         [JsonProperty(PropertyName = "properties.maxSizeInMegabytes")]
@@ -163,10 +128,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public bool? RequiresDuplicateDetection { get; set; }
 
         /// <summary>
-        /// Size of the topic in bytes.
+        /// Size of the topic, in bytes.
         /// </summary>
         [JsonProperty(PropertyName = "properties.sizeInBytes")]
-        public long? SizeInBytes { get; set; }
+        public long? SizeInBytes { get; private set; }
 
         /// <summary>
         /// Enumerates the possible values for the status of a messaging
@@ -181,7 +146,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Number of subscriptions.
         /// </summary>
         [JsonProperty(PropertyName = "properties.subscriptionCount")]
-        public int? SubscriptionCount { get; set; }
+        public int? SubscriptionCount { get; private set; }
 
         /// <summary>
         /// Value that indicates whether the topic supports ordering.
@@ -190,10 +155,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public bool? SupportOrdering { get; set; }
 
         /// <summary>
-        /// The exact time the message has been updated.
+        /// The exact time the message was updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.updatedAt")]
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; private set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

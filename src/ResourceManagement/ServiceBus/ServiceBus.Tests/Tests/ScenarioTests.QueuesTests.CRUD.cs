@@ -36,18 +36,20 @@ namespace ServiceBus.Tests.ScenarioTests
                 InitializeClients(context);
                 var location = ServiceBusManagementHelper.DefaultLocation;
 
-                var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
-                if (string.IsNullOrWhiteSpace(resourceGroup))
-                {
-                    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
-                    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
-                }
+                //var resourceGroup = this.ResourceManagementClient.TryGetResourceGroup(location);
+                //if (string.IsNullOrWhiteSpace(resourceGroup))
+                //{
+                //    resourceGroup = TestUtilities.GenerateName(ServiceBusManagementHelper.ResourceGroupPrefix);
+                //    this.ResourceManagementClient.TryRegisterResourceGroup(location, resourceGroup);
+                //}
+
+                var resourceGroup = "Default-ServiceBus-WestUS";
 
                 // Create Namespace
                 var namespaceName = TestUtilities.GenerateName(ServiceBusManagementHelper.NamespacePrefix);
 
                 var createNamespaceResponse = this.ServiceBusManagementClient.Namespaces.CreateOrUpdate(resourceGroup, namespaceName,
-                    new NamespaceCreateOrUpdateParameters()
+                    new NamespaceResource()
                     {
                         Location = location,
                         Sku = new Sku
@@ -65,7 +67,7 @@ namespace ServiceBus.Tests.ScenarioTests
                 // Create Queue
                 var queueName = TestUtilities.GenerateName(ServiceBusManagementHelper.QueuesPrefix);
                 var createQueueResponse = this.ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName,
-                new QueueCreateOrUpdateParameters()
+                new QueueResource()
                 {
                     Location = location
                 });
@@ -80,23 +82,21 @@ namespace ServiceBus.Tests.ScenarioTests
                 Assert.Equal(getQueueResponse.Name, queueName);
                   
                 // Get all Queues
-                var getQueueListAllResponse = ServiceBusManagementClient.Queues.ListAll(resourceGroup, namespaceName);
+                var getQueueListAllResponse = ServiceBusManagementClient.Queues.ListByNamspace(resourceGroup, namespaceName);
                 Assert.NotNull(getQueueListAllResponse);
                 Assert.True(getQueueListAllResponse.Count() >= 1);                
                 Assert.True(getQueueListAllResponse.All(ns => ns.Id.Contains(resourceGroup)));
                 
                 // Update Queue. 
-                var updateQueuesParameter = new QueueCreateOrUpdateParameters()
+                var updateQueuesParameter = new QueueResource()
                 {
                     Location = location,
-                    EnableExpress = true,                   
-                    IsAnonymousAccessible = true                   
+                    EnableExpress = true
                 };
 
                 var updateQueueResponse = ServiceBusManagementClient.Queues.CreateOrUpdate(resourceGroup, namespaceName, queueName, updateQueuesParameter);
                 Assert.NotNull(updateQueueResponse);
                 Assert.True(updateQueueResponse.EnableExpress);
-                Assert.True(updateQueueResponse.IsAnonymousAccessible);
 
                 // Delete Created Queue  and check for the NotFound exception 
                 ServiceBusManagementClient.Queues.Delete(resourceGroup, namespaceName, queueName);

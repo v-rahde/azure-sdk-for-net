@@ -17,7 +17,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
     using Microsoft.Rest.Azure;
 
     /// <summary>
-    /// Description of Subscription Resource.
+    /// Description of subscription resource.
     /// </summary>
     [JsonTransformation]
     public partial class SubscriptionResource : Resource
@@ -30,7 +30,7 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// Initializes a new instance of the SubscriptionResource class.
         /// </summary>
-        public SubscriptionResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DateTime? accessedAt = default(DateTime?), string autoDeleteOnIdle = default(string), MessageCountDetails countDetails = default(MessageCountDetails), DateTime? createdAt = default(DateTime?), string defaultMessageTimeToLive = default(string), bool? deadLetteringOnFilterEvaluationExceptions = default(bool?), bool? deadLetteringOnMessageExpiration = default(bool?), bool? enableBatchedOperations = default(bool?), EntityAvailabilityStatus? entityAvailabilityStatus = default(EntityAvailabilityStatus?), bool? isReadOnly = default(bool?), string lockDuration = default(string), int? maxDeliveryCount = default(int?), long? messageCount = default(long?), bool? requiresSession = default(bool?), EntityStatus? status = default(EntityStatus?), DateTime? updatedAt = default(DateTime?))
+        public SubscriptionResource(string location, string id = default(string), string name = default(string), string type = default(string), IDictionary<string, string> tags = default(IDictionary<string, string>), DateTime? accessedAt = default(DateTime?), string autoDeleteOnIdle = default(string), MessageCountDetails countDetails = default(MessageCountDetails), DateTime? createdAt = default(DateTime?), string defaultMessageTimeToLive = default(string), bool? deadLetteringOnFilterEvaluationExceptions = default(bool?), bool? deadLetteringOnMessageExpiration = default(bool?), bool? enableBatchedOperations = default(bool?), string lockDuration = default(string), int? maxDeliveryCount = default(int?), long? messageCount = default(long?), bool? requiresSession = default(bool?), EntityStatus? status = default(EntityStatus?), DateTime? updatedAt = default(DateTime?))
             : base(location, id, name, type, tags)
         {
             AccessedAt = accessedAt;
@@ -41,8 +41,6 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
             DeadLetteringOnFilterEvaluationExceptions = deadLetteringOnFilterEvaluationExceptions;
             DeadLetteringOnMessageExpiration = deadLetteringOnMessageExpiration;
             EnableBatchedOperations = enableBatchedOperations;
-            EntityAvailabilityStatus = entityAvailabilityStatus;
-            IsReadOnly = isReadOnly;
             LockDuration = lockDuration;
             MaxDeliveryCount = maxDeliveryCount;
             MessageCount = messageCount;
@@ -52,10 +50,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         }
 
         /// <summary>
-        /// Last time a there was a receive request to this subscription.
+        /// Last time there was a receive request to this subscription.
         /// </summary>
         [JsonProperty(PropertyName = "properties.accessedAt")]
-        public DateTime? AccessedAt { get; set; }
+        public DateTime? AccessedAt { get; private set; }
 
         /// <summary>
         /// TimeSpan idle interval after which the topic is automatically
@@ -67,13 +65,13 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// <summary>
         /// </summary>
         [JsonProperty(PropertyName = "properties.countDetails")]
-        public MessageCountDetails CountDetails { get; set; }
+        public MessageCountDetails CountDetails { get; private set; }
 
         /// <summary>
         /// Exact time the message was created.
         /// </summary>
         [JsonProperty(PropertyName = "properties.createdAt")]
-        public DateTime? CreatedAt { get; set; }
+        public DateTime? CreatedAt { get; private set; }
 
         /// <summary>
         /// Default message time to live value. This is the duration after
@@ -85,38 +83,25 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public string DefaultMessageTimeToLive { get; set; }
 
         /// <summary>
-        /// Value that indicates if a subscription has dead letter support on
-        /// Filter evaluation exceptions.
+        /// Value that indicates whether a subscription has dead letter
+        /// support on filter evaluation exceptions.
         /// </summary>
         [JsonProperty(PropertyName = "properties.deadLetteringOnFilterEvaluationExceptions")]
         public bool? DeadLetteringOnFilterEvaluationExceptions { get; set; }
 
         /// <summary>
-        /// Value that indicates if a subscription has dead letter support
-        /// when a message expires.
+        /// Value that indicates whether a subscription has dead letter
+        /// support when a message expires.
         /// </summary>
         [JsonProperty(PropertyName = "properties.deadLetteringOnMessageExpiration")]
         public bool? DeadLetteringOnMessageExpiration { get; set; }
 
         /// <summary>
         /// Value that indicates whether server-side batched operations are
-        /// enabled..
+        /// enabled.
         /// </summary>
         [JsonProperty(PropertyName = "properties.enableBatchedOperations")]
         public bool? EnableBatchedOperations { get; set; }
-
-        /// <summary>
-        /// Entity availability status for the topic. Possible values include:
-        /// 'Available', 'Limited', 'Renaming', 'Restoring', 'Unknown'
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.entityAvailabilityStatus")]
-        public EntityAvailabilityStatus? EntityAvailabilityStatus { get; set; }
-
-        /// <summary>
-        /// Value that indicates whether the entity description is read-only.
-        /// </summary>
-        [JsonProperty(PropertyName = "properties.isReadOnly")]
-        public bool? IsReadOnly { get; set; }
 
         /// <summary>
         /// The lock duration time span for the subscription.
@@ -134,10 +119,11 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Number of messages.
         /// </summary>
         [JsonProperty(PropertyName = "properties.messageCount")]
-        public long? MessageCount { get; set; }
+        public long? MessageCount { get; private set; }
 
         /// <summary>
-        /// Value indicating if a subscription supports the concept of session.
+        /// Value indicating if a subscription supports the concept of
+        /// sessions.
         /// </summary>
         [JsonProperty(PropertyName = "properties.requiresSession")]
         public bool? RequiresSession { get; set; }
@@ -152,10 +138,10 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         public EntityStatus? Status { get; set; }
 
         /// <summary>
-        /// The exact time the message has been updated.
+        /// The exact time the message was updated.
         /// </summary>
         [JsonProperty(PropertyName = "properties.updatedAt")]
-        public DateTime? UpdatedAt { get; set; }
+        public DateTime? UpdatedAt { get; private set; }
 
         /// <summary>
         /// Validate the object. Throws ValidationException if validation fails.

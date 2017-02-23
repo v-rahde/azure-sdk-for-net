@@ -42,32 +42,32 @@ namespace Microsoft.Azure.Management.ServiceBus.Models
         /// Number of active messages in the queue, topic, or subscription.
         /// </summary>
         [JsonProperty(PropertyName = "activeMessageCount")]
-        public long? ActiveMessageCount { get; set; }
+        public long? ActiveMessageCount { get; private set; }
 
         /// <summary>
-        /// Number of messages that are dead letters.
+        /// Number of messages that are dead lettered.
         /// </summary>
         [JsonProperty(PropertyName = "deadLetterMessageCount")]
-        public long? DeadLetterMessageCount { get; set; }
+        public long? DeadLetterMessageCount { get; private set; }
 
         /// <summary>
-        /// Number scheduled messages.
+        /// Number of scheduled messages.
         /// </summary>
         [JsonProperty(PropertyName = "scheduledMessageCount")]
-        public long? ScheduledMessageCount { get; set; }
+        public long? ScheduledMessageCount { get; private set; }
 
         /// <summary>
         /// Number of messages transferred into dead letters.
         /// </summary>
         [JsonProperty(PropertyName = "transferDeadLetterMessageCount")]
-        public long? TransferDeadLetterMessageCount { get; set; }
+        public long? TransferDeadLetterMessageCount { get; private set; }
 
         /// <summary>
         /// Number of messages transferred to another queue, topic, or
         /// subscription.
         /// </summary>
         [JsonProperty(PropertyName = "transferMessageCount")]
-        public long? TransferMessageCount { get; set; }
+        public long? TransferMessageCount { get; private set; }
 
     }
 }

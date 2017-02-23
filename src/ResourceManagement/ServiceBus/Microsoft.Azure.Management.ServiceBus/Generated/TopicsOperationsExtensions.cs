@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ServiceBus
     public static partial class TopicsOperationsExtensions
     {
             /// <summary>
-            /// Lists all the topics in a namespace.
+            /// Gets all the topics in a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -34,13 +34,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='namespaceName'>
             /// The namespace name.
             /// </param>
-            public static IPage<TopicResource> ListAll(this ITopicsOperations operations, string resourceGroupName, string namespaceName)
+            public static IPage<TopicResource> ListByNamspace(this ITopicsOperations operations, string resourceGroupName, string namespaceName)
             {
-                return Task.Factory.StartNew(s => ((ITopicsOperations)s).ListAllAsync(resourceGroupName, namespaceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ITopicsOperations)s).ListByNamspaceAsync(resourceGroupName, namespaceName), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all the topics in a namespace.
+            /// Gets all the topics in a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -54,16 +54,16 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TopicResource>> ListAllAsync(this ITopicsOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<TopicResource>> ListByNamspaceAsync(this ITopicsOperations operations, string resourceGroupName, string namespaceName, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAllWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByNamspaceWithHttpMessagesAsync(resourceGroupName, namespaceName, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Creates a topic in the specified namespace
+            /// Creates a topic in the specified namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -78,15 +78,15 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The topic name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create a Topic Resource.
+            /// Parameters supplied to create a topic resource.
             /// </param>
-            public static TopicResource CreateOrUpdate(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, TopicCreateOrUpdateParameters parameters)
+            public static TopicResource CreateOrUpdate(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, TopicResource parameters)
             {
                 return Task.Factory.StartNew(s => ((ITopicsOperations)s).CreateOrUpdateAsync(resourceGroupName, namespaceName, topicName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates a topic in the specified namespace
+            /// Creates a topic in the specified namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -101,12 +101,12 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The topic name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create a Topic Resource.
+            /// Parameters supplied to create a topic resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<TopicResource> CreateOrUpdateAsync(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, TopicCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<TopicResource> CreateOrUpdateAsync(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, TopicResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, topicName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -124,10 +124,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The topics name.
+            /// The namespace name.
             /// </param>
             /// <param name='topicName'>
-            /// The topics name.
+            /// The name of the topic to delete.
             /// </param>
             public static void Delete(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName)
             {
@@ -144,10 +144,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The topics name.
+            /// The namespace name.
             /// </param>
             /// <param name='topicName'>
-            /// The topics name.
+            /// The name of the topic to delete.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -158,7 +158,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Returns the description for the specified topic
+            /// Returns a description for the specified topic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -178,7 +178,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Returns the description for the specified topic
+            /// Returns a description for the specified topic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -204,7 +204,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Authorization rules for a topic.
+            /// Gets authorization rules for a topic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -213,7 +213,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The topic name
+            /// The namespace name.
             /// </param>
             /// <param name='topicName'>
             /// The topic name.
@@ -224,7 +224,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Authorization rules for a topic.
+            /// Gets authorization rules for a topic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -233,7 +233,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The topic name
+            /// The namespace name.
             /// </param>
             /// <param name='topicName'>
             /// The topic name.
@@ -250,7 +250,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Creates an authorizatioRule for the specified topic.
+            /// Creates an authorizatio rule for the specified topic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -265,18 +265,18 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The topic name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Aauthorization Rule Name.
+            /// Authorization rule name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.
             /// </param>
-            public static SharedAccessAuthorizationRuleResource CreateOrUpdateAuthorizationRule(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters)
+            public static SharedAccessAuthorizationRuleResource CreateOrUpdateAuthorizationRule(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, string authorizationRuleName, SharedAccessAuthorizationRuleResource parameters)
             {
                 return Task.Factory.StartNew(s => ((ITopicsOperations)s).CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, topicName, authorizationRuleName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates an authorizatioRule for the specified topic.
+            /// Creates an authorizatio rule for the specified topic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -291,7 +291,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The topic name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Aauthorization Rule Name.
+            /// Authorization rule name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.
@@ -299,7 +299,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SharedAccessAuthorizationRuleResource> CreateOrUpdateAuthorizationRuleAsync(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SharedAccessAuthorizationRuleResource> CreateOrUpdateAuthorizationRuleAsync(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, string authorizationRuleName, SharedAccessAuthorizationRuleResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, topicName, authorizationRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -308,7 +308,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Returns the specified authorizationRule.
+            /// Returns the specified authorization rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -317,7 +317,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             /// <param name='topicName'>
             /// The topic name.
@@ -331,7 +331,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Returns the specified authorizationRule.
+            /// Returns the specified authorization rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -340,7 +340,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             /// <param name='topicName'>
             /// The topic name.
@@ -360,7 +360,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Deletes a topic authorizationRule
+            /// Deletes a topic authorization rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -375,7 +375,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The topic name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// AuthorizationRule Name.
+            /// Authorization rule name.
             /// </param>
             public static void DeleteAuthorizationRule(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, string authorizationRuleName)
             {
@@ -383,7 +383,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Deletes a topic authorizationRule
+            /// Deletes a topic authorization rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -398,7 +398,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The topic name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// AuthorizationRule Name.
+            /// Authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -409,7 +409,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Primary and Secondary ConnectionStrings to the topic
+            /// Gets the primary and secondary connection strings for the topic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -424,7 +424,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The topic name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
+            /// The authorization rule name.
             /// </param>
             public static ResourceListKeys ListKeys(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, string authorizationRuleName)
             {
@@ -432,7 +432,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Primary and Secondary ConnectionStrings to the topic
+            /// Gets the primary and secondary connection strings for the topic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -447,7 +447,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The topic name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -461,7 +461,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Regenerates Primary or Secondary ConnectionStrings to the topic
+            /// Regenerates primary or secondary connection strings for the topic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -476,10 +476,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The topic name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to regenerate Auth Rule.
+            /// Parameters supplied to regenerate the authorization rule.
             /// </param>
             public static ResourceListKeys RegenerateKeys(this ITopicsOperations operations, string resourceGroupName, string namespaceName, string topicName, string authorizationRuleName, RegenerateKeysParameters parameters)
             {
@@ -487,7 +487,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Regenerates Primary or Secondary ConnectionStrings to the topic
+            /// Regenerates primary or secondary connection strings for the topic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -502,10 +502,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The topic name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to regenerate Auth Rule.
+            /// Parameters supplied to regenerate the authorization rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -519,7 +519,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Lists all the topics in a namespace.
+            /// Gets all the topics in a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -527,13 +527,13 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<TopicResource> ListAllNext(this ITopicsOperations operations, string nextPageLink)
+            public static IPage<TopicResource> ListByNamspaceNext(this ITopicsOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((ITopicsOperations)s).ListAllNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((ITopicsOperations)s).ListByNamspaceNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all the topics in a namespace.
+            /// Gets all the topics in a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -544,16 +544,16 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<TopicResource>> ListAllNextAsync(this ITopicsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<TopicResource>> ListByNamspaceNextAsync(this ITopicsOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListAllNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListByNamspaceNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Authorization rules for a topic.
+            /// Gets authorization rules for a topic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -567,7 +567,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Authorization rules for a topic.
+            /// Gets authorization rules for a topic.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

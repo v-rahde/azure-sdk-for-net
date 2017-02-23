@@ -23,20 +23,20 @@ namespace Microsoft.Azure.Management.ServiceBus
     public static partial class NamespacesOperationsExtensions
     {
             /// <summary>
-            /// Lists all the available namespaces within the subscription irrespective of
-            /// the resourceGroups.
+            /// Gets all the available namespaces within the subscription, irrespective of
+            /// the resource groups.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
             /// </param>
-            public static IPage<NamespaceResource> ListBySubscription(this INamespacesOperations operations)
+            public static IPage<NamespaceResource> List(this INamespacesOperations operations)
             {
-                return Task.Factory.StartNew(s => ((INamespacesOperations)s).ListBySubscriptionAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((INamespacesOperations)s).ListAsync(), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all the available namespaces within the subscription irrespective of
-            /// the resourceGroups.
+            /// Gets all the available namespaces within the subscription, irrespective of
+            /// the resource groups.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -44,16 +44,16 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NamespaceResource>> ListBySubscriptionAsync(this INamespacesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<NamespaceResource>> ListAsync(this INamespacesOperations operations, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListBySubscriptionWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListWithHttpMessagesAsync(null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Lists the available namespaces within a resourceGroup.
+            /// Gets the available namespaces within a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -67,7 +67,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Lists the available namespaces within a resourceGroup.
+            /// Gets the available namespaces within a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -87,7 +87,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Creates/Updates a service namespace. Once created, this namespace's
+            /// Creates or updates a service namespace. Once created, this namespace's
             /// resource manifest is immutable. This operation is idempotent.
             /// </summary>
             /// <param name='operations'>
@@ -100,15 +100,15 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create a Namespace Resource.
+            /// Parameters supplied to create a namespace resource.
             /// </param>
-            public static NamespaceResource CreateOrUpdate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateOrUpdateParameters parameters)
+            public static NamespaceResource CreateOrUpdate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceResource parameters)
             {
                 return Task.Factory.StartNew(s => ((INamespacesOperations)s).CreateOrUpdateAsync(resourceGroupName, namespaceName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates/Updates a service namespace. Once created, this namespace's
+            /// Creates or updates a service namespace. Once created, this namespace's
             /// resource manifest is immutable. This operation is idempotent.
             /// </summary>
             /// <param name='operations'>
@@ -121,12 +121,12 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create a Namespace Resource.
+            /// Parameters supplied to create a namespace resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NamespaceResource> CreateOrUpdateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NamespaceResource> CreateOrUpdateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -135,7 +135,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Creates/Updates a service namespace. Once created, this namespace's
+            /// Creates or updates a service namespace. Once created, this namespace's
             /// resource manifest is immutable. This operation is idempotent.
             /// </summary>
             /// <param name='operations'>
@@ -148,15 +148,15 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create a Namespace Resource.
+            /// Parameters supplied to create a namespace resource.
             /// </param>
-            public static NamespaceResource BeginCreateOrUpdate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateOrUpdateParameters parameters)
+            public static NamespaceResource BeginCreateOrUpdate(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceResource parameters)
             {
                 return Task.Factory.StartNew(s => ((INamespacesOperations)s).BeginCreateOrUpdateAsync(resourceGroupName, namespaceName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates/Updates a service namespace. Once created, this namespace's
+            /// Creates or updates a service namespace. Once created, this namespace's
             /// resource manifest is immutable. This operation is idempotent.
             /// </summary>
             /// <param name='operations'>
@@ -169,12 +169,12 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to create a Namespace Resource.
+            /// Parameters supplied to create a namespace resource.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<NamespaceResource> BeginCreateOrUpdateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<NamespaceResource> BeginCreateOrUpdateAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, NamespaceResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.BeginCreateOrUpdateWithHttpMessagesAsync(resourceGroupName, namespaceName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -261,7 +261,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Returns the description for the specified namespace.
+            /// Gets a description for the specified namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -278,7 +278,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Returns the description for the specified namespace.
+            /// Gets a description for the specified namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -301,7 +301,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Authorization rules for a namespace.
+            /// Gets the authorization rules for a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -310,7 +310,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             public static IPage<SharedAccessAuthorizationRuleResource> ListAuthorizationRules(this INamespacesOperations operations, string resourceGroupName, string namespaceName)
             {
@@ -318,7 +318,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Authorization rules for a namespace.
+            /// Gets the authorization rules for a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -327,7 +327,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -341,7 +341,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Creates an authorization rule for a namespace
+            /// Creates or updates an authorization rule for a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -353,18 +353,18 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Namespace Aauthorization Rule Name.
+            /// Namespace authorization rule name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.
             /// </param>
-            public static SharedAccessAuthorizationRuleResource CreateOrUpdateAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters)
+            public static SharedAccessAuthorizationRuleResource CreateOrUpdateAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, SharedAccessAuthorizationRuleResource parameters)
             {
                 return Task.Factory.StartNew(s => ((INamespacesOperations)s).CreateOrUpdateAuthorizationRuleAsync(resourceGroupName, namespaceName, authorizationRuleName, parameters), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Creates an authorization rule for a namespace
+            /// Creates or updates an authorization rule for a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -376,7 +376,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Namespace Aauthorization Rule Name.
+            /// Namespace authorization rule name.
             /// </param>
             /// <param name='parameters'>
             /// The shared access authorization rule.
@@ -384,7 +384,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<SharedAccessAuthorizationRuleResource> CreateOrUpdateAuthorizationRuleAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, SharedAccessAuthorizationRuleCreateOrUpdateParameters parameters, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<SharedAccessAuthorizationRuleResource> CreateOrUpdateAuthorizationRuleAsync(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, SharedAccessAuthorizationRuleResource parameters, CancellationToken cancellationToken = default(CancellationToken))
             {
                 using (var _result = await operations.CreateOrUpdateAuthorizationRuleWithHttpMessagesAsync(resourceGroupName, namespaceName, authorizationRuleName, parameters, null, cancellationToken).ConfigureAwait(false))
                 {
@@ -393,7 +393,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Deletes a namespace authorization rule
+            /// Deletes a namespace authorization rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -405,7 +405,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Authorization Rule Name.
+            /// Authorization rule name.
             /// </param>
             public static void DeleteAuthorizationRule(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
             {
@@ -413,7 +413,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Deletes a namespace authorization rule
+            /// Deletes a namespace authorization rule.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -425,7 +425,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// Authorization Rule Name.
+            /// Authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -436,7 +436,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Authorization rule for a namespace by name.
+            /// Gets an authorization rule for a namespace by rule name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -445,7 +445,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             /// <param name='authorizationRuleName'>
             /// Authorization rule name.
@@ -456,7 +456,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Authorization rule for a namespace by name.
+            /// Gets an authorization rule for a namespace by rule name.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -465,7 +465,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The name of the resource group.
             /// </param>
             /// <param name='namespaceName'>
-            /// The namespace name
+            /// The namespace name.
             /// </param>
             /// <param name='authorizationRuleName'>
             /// Authorization rule name.
@@ -482,7 +482,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Primary and Secondary ConnectionStrings to the namespace
+            /// Gets the primary and secondary connection strings for the namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -494,7 +494,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
+            /// The authorization rule name.
             /// </param>
             public static ResourceListKeys ListKeys(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName)
             {
@@ -502,7 +502,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Primary and Secondary ConnectionStrings to the namespace
+            /// Gets the primary and secondary connection strings for the namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -514,7 +514,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -528,7 +528,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Regenerats the Primary or Secondary ConnectionStrings to the namespace
+            /// Regenerates the primary or secondary connection strings for the namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -540,10 +540,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to regenerate Auth Rule.
+            /// Parameters supplied to regenerate the authorization rule.
             /// </param>
             public static ResourceListKeys RegenerateKeys(this INamespacesOperations operations, string resourceGroupName, string namespaceName, string authorizationRuleName, RegenerateKeysParameters parameters)
             {
@@ -551,7 +551,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Regenerats the Primary or Secondary ConnectionStrings to the namespace
+            /// Regenerates the primary or secondary connection strings for the namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -563,10 +563,10 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// The namespace name.
             /// </param>
             /// <param name='authorizationRuleName'>
-            /// The authorizationRule name.
+            /// The authorization rule name.
             /// </param>
             /// <param name='parameters'>
-            /// Parameters supplied to regenerate Auth Rule.
+            /// Parameters supplied to regenerate the authorization rule.
             /// </param>
             /// <param name='cancellationToken'>
             /// The cancellation token.
@@ -580,8 +580,8 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Lists all the available namespaces within the subscription irrespective of
-            /// the resourceGroups.
+            /// Gets all the available namespaces within the subscription, irrespective of
+            /// the resource groups.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -589,14 +589,14 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='nextPageLink'>
             /// The NextLink from the previous successful call to List operation.
             /// </param>
-            public static IPage<NamespaceResource> ListBySubscriptionNext(this INamespacesOperations operations, string nextPageLink)
+            public static IPage<NamespaceResource> ListNext(this INamespacesOperations operations, string nextPageLink)
             {
-                return Task.Factory.StartNew(s => ((INamespacesOperations)s).ListBySubscriptionNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
+                return Task.Factory.StartNew(s => ((INamespacesOperations)s).ListNextAsync(nextPageLink), operations, CancellationToken.None, TaskCreationOptions.None, TaskScheduler.Default).Unwrap().GetAwaiter().GetResult();
             }
 
             /// <summary>
-            /// Lists all the available namespaces within the subscription irrespective of
-            /// the resourceGroups.
+            /// Gets all the available namespaces within the subscription, irrespective of
+            /// the resource groups.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -607,16 +607,16 @@ namespace Microsoft.Azure.Management.ServiceBus
             /// <param name='cancellationToken'>
             /// The cancellation token.
             /// </param>
-            public static async Task<IPage<NamespaceResource>> ListBySubscriptionNextAsync(this INamespacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
+            public static async Task<IPage<NamespaceResource>> ListNextAsync(this INamespacesOperations operations, string nextPageLink, CancellationToken cancellationToken = default(CancellationToken))
             {
-                using (var _result = await operations.ListBySubscriptionNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
+                using (var _result = await operations.ListNextWithHttpMessagesAsync(nextPageLink, null, cancellationToken).ConfigureAwait(false))
                 {
                     return _result.Body;
                 }
             }
 
             /// <summary>
-            /// Lists the available namespaces within a resourceGroup.
+            /// Gets the available namespaces within a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -630,7 +630,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Lists the available namespaces within a resourceGroup.
+            /// Gets the available namespaces within a resource group.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -650,7 +650,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Authorization rules for a namespace.
+            /// Gets the authorization rules for a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.
@@ -664,7 +664,7 @@ namespace Microsoft.Azure.Management.ServiceBus
             }
 
             /// <summary>
-            /// Authorization rules for a namespace.
+            /// Gets the authorization rules for a namespace.
             /// </summary>
             /// <param name='operations'>
             /// The operations group for this extension method.

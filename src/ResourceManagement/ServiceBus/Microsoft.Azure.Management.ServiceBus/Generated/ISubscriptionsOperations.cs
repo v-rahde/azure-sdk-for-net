@@ -23,7 +23,7 @@ namespace Microsoft.Azure.Management.ServiceBus
     public partial interface ISubscriptionsOperations
     {
         /// <summary>
-        /// Lsit all the subscriptions under a specified topic
+        /// Lsit all the subscriptions under a specified topic.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -40,9 +40,9 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<SubscriptionResource>>> ListAllWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SubscriptionResource>>> ListByTopicWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Creates a topic subscription
+        /// Creates a topic subscription.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -51,13 +51,13 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The namespace name.
         /// </param>
         /// <param name='topicName'>
-        /// The topicName name.
+        /// The topic name.
         /// </param>
         /// <param name='subscriptionName'>
-        /// The subscriptionName name.
+        /// The subscription name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to create a subscription Resource.
+        /// Parameters supplied to create a subscription resource.
         /// </param>
         /// <param name='customHeaders'>
         /// The headers that will be added to request.
@@ -65,7 +65,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<SubscriptionResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, SubscriptionCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<SubscriptionResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, SubscriptionResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
         /// Deletes a subscription from the specified topic.
         /// </summary>
@@ -111,7 +111,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// </param>
         Task<AzureOperationResponse<SubscriptionResource>> GetWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
         /// <summary>
-        /// Lsit all the subscriptions under a specified topic
+        /// Lsit all the subscriptions under a specified topic.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -122,6 +122,6 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <param name='cancellationToken'>
         /// The cancellation token.
         /// </param>
-        Task<AzureOperationResponse<IPage<SubscriptionResource>>> ListAllNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
+        Task<AzureOperationResponse<IPage<SubscriptionResource>>> ListByTopicNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken));
     }
 }

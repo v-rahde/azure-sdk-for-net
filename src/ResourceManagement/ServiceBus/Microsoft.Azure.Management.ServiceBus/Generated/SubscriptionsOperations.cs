@@ -50,7 +50,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         public ServiceBusManagementClient Client { get; private set; }
 
         /// <summary>
-        /// Lsit all the subscriptions under a specified topic
+        /// Lsit all the subscriptions under a specified topic.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -70,7 +70,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<SubscriptionResource>>> ListAllWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<SubscriptionResource>>> ListByTopicWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -103,7 +103,7 @@ namespace Microsoft.Azure.Management.ServiceBus
                 tracingParameters.Add("namespaceName", namespaceName);
                 tracingParameters.Add("topicName", topicName);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListAll", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByTopic", tracingParameters);
             }
             // Construct URL
             var _baseUrl = this.Client.BaseUri.AbsoluteUri;
@@ -241,7 +241,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         }
 
         /// <summary>
-        /// Creates a topic subscription
+        /// Creates a topic subscription.
         /// </summary>
         /// <param name='resourceGroupName'>
         /// The name of the resource group.
@@ -250,13 +250,13 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// The namespace name.
         /// </param>
         /// <param name='topicName'>
-        /// The topicName name.
+        /// The topic name.
         /// </param>
         /// <param name='subscriptionName'>
-        /// The subscriptionName name.
+        /// The subscription name.
         /// </param>
         /// <param name='parameters'>
-        /// Parameters supplied to create a subscription Resource.
+        /// Parameters supplied to create a subscription resource.
         /// </param>
         /// <param name='customHeaders'>
         /// Headers that will be added to request.
@@ -267,7 +267,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<SubscriptionResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, SubscriptionCreateOrUpdateParameters parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<SubscriptionResource>> CreateOrUpdateWithHttpMessagesAsync(string resourceGroupName, string namespaceName, string topicName, string subscriptionName, SubscriptionResource parameters, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (resourceGroupName == null)
             {
@@ -828,7 +828,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         }
 
         /// <summary>
-        /// Lsit all the subscriptions under a specified topic
+        /// Lsit all the subscriptions under a specified topic.
         /// </summary>
         /// <param name='nextPageLink'>
         /// The NextLink from the previous successful call to List operation.
@@ -842,7 +842,7 @@ namespace Microsoft.Azure.Management.ServiceBus
         /// <return>
         /// A response object containing the response body and response headers.
         /// </return>
-        public async Task<AzureOperationResponse<IPage<SubscriptionResource>>> ListAllNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
+        public async Task<AzureOperationResponse<IPage<SubscriptionResource>>> ListByTopicNextWithHttpMessagesAsync(string nextPageLink, Dictionary<string, List<string>> customHeaders = null, CancellationToken cancellationToken = default(CancellationToken))
         {
             if (nextPageLink == null)
             {
@@ -857,7 +857,7 @@ namespace Microsoft.Azure.Management.ServiceBus
                 Dictionary<string, object> tracingParameters = new Dictionary<string, object>();
                 tracingParameters.Add("nextPageLink", nextPageLink);
                 tracingParameters.Add("cancellationToken", cancellationToken);
-                ServiceClientTracing.Enter(_invocationId, this, "ListAllNext", tracingParameters);
+                ServiceClientTracing.Enter(_invocationId, this, "ListByTopicNext", tracingParameters);
             }
             // Construct URL
             string _url = "{nextLink}";
